@@ -59,20 +59,20 @@ public class WSGenerator {
 		    	if(linha.contains(",") || linha.contains(";") || linha.contains(" ")) {
 		    		String[] lista = linha.split("[,; ]");
 		    		for(String s : lista){
-						if(s.length() >= 4){
+						if(s.length() >= 4){ //APENAS ACEITA PALAVRAS COM MAIS DO QUE 3 CARACTERES
 							palavras.add(s);
 						}
-						if(s.length() > size){
+						if(s.length() > size){ //AS PALAVRAS NÃO PODEM SER MAIORES DO QUE A MATRIZ
 							System.out.println("A palavra não pode ser maior do que a sopa de letras");
 							System.exit(0);
 						}
 					}
 					
 		    	}else {
-					if(linha.length() >= 4){
+					if(linha.length() >= 4){ //APENAS ACEITA PALAVRAS COM MAIS DO QUE 3 CARACTERES
 						palavras.add(linha);
 					}
-					if(linha.length() > size){
+					if(linha.length() > size){ //AS PALAVRAS NÃO PODEM SER MAIORES DO QUE A MATRIZ
 						System.out.println("A palavra não pode ser maior do que a sopa de letras");
 						System.exit(0);
 					}
@@ -93,7 +93,7 @@ public class WSGenerator {
 		*/
 		for (String palavra : palavras) {
 			for (String palavra2 : palavras) {
-				if (palavra.contains(palavra2) && !palavra.equals(palavra2)) {
+				if (palavra.contains(palavra2) && !palavra.equals(palavra2)) { //VERIFICA SE AS DUAS PALAVRAS SÃO DIFERENTES MAS TÊM ALGO EM COMUM
 					System.err.println("A lista de palavras contém palavras duplicadas ou frases redundantes!");
 					System.exit(0);
 				}
@@ -129,29 +129,29 @@ public class WSGenerator {
 				switch(randomInt) {
 					case 1: //SENTIDO: ESQUERDA
 						//escolher uma linha aleatoria
-						double randomNumber=Math.random();
-						int randomLinha= (int) (randomNumber*(size));
+						double randomNumber=Math.random();				//
+						int randomLinha= (int) (randomNumber*(size));	//A PALAVRA PODE SER COLOCADA EM QUALQUER LINHA
 						
 						//escolher a coluna em que começa
-						randomNumber=Math.random();
-						int randomColuna= (int) ((randomNumber*(size-word.length()))+word.length());
+						randomNumber=Math.random();														//
+						int randomColuna= (int) ((randomNumber*(size-word.length()))+word.length());	//A PALAVRA TEM DE COMEÇAR NUMA POSIÇÃO ENTRE <TAMANHO DA PALAVRA> E <NUMERO DE COLUNAS> PARA PODER SER ESCRITA DA DIREITA PARA A ESQUERDA
 						
 						if(randomColuna>=size) {
 							break;
 						}
 						
-						boolean overwritten = false;
-						for(int i=randomColuna; i>randomColuna-word.length(); i--) {
-							if(m[randomLinha][i] != 0){
-								overwritten=true;
-							}
-						}
+						boolean overwritten = false;									// 
+						for(int i=randomColuna; i>randomColuna-word.length(); i--) {	//	
+							if(m[randomLinha][i] != 0){									// EXCERTO DE CÓDIGO PRESENTE EM TODOS OS SENTIDOS, VERIFICA SE ALGUMA OUTRA PALAVRA JÁ FOI ESCRITA NAQUELE LUGAR
+								overwritten=true;										//
+							}															//
+						}																//
 						
 						if(!overwritten) {
 							int pos=0;
-							for(int i=randomColuna; i>randomColuna-word.length(); i--) {
-								m[randomLinha][i]=word.charAt(pos);
-								pos++;
+							for(int i=randomColuna; i>randomColuna-word.length(); i--) {	//
+								m[randomLinha][i]=word.charAt(pos);							// EXCERTO DE CÓDIGO PRESENTE EM TODOS OS SENTIDOS, PREENCHE A TABELA SE NENHUMA OUTRA PALAVRA ESTIVER A OCUPAR AS POSIÇÕES DA MATRIZ PRETENDIDAS
+								pos++;														//
 							}
 							wrote=true;
 						}
@@ -159,12 +159,12 @@ public class WSGenerator {
 						break;
 					case 2: //SENTIDO: DIREITA
 						//escolher uma linha aleatoria
-						randomNumber=Math.random();
-						randomLinha= (int) (randomNumber*(size));
+						randomNumber=Math.random();					//
+						randomLinha= (int) (randomNumber*(size));	//A PALAVRA PODE SER COLOCADA EM QUALQUER LINHA
 						
 						//escolher a coluna em que começa
-						randomNumber=Math.random();
-						randomColuna= (int) (randomNumber*(size-(word.length()-1))); // aqui é preciso ter cuidado com o tamanho da palavra para que não haja erros nos limites da matriz
+						randomNumber=Math.random();										//
+						randomColuna= (int) (randomNumber*(size-(word.length()-1))); 	//MAS HÁ RESTRIÇÕES A NIVEL DAS COLUNAS, A PALAVRA TEM DE COMECAR ENTRE 0 E <SIZE-TAMANHO_DA_PALAVRA>
 						
 						if(randomColuna<0) {
 							break;
@@ -189,11 +189,11 @@ public class WSGenerator {
 					case 3: //SENTIDO: CIMA
 						//escolher uma coluna aleatoria
 						randomNumber=Math.random();
-						randomColuna= (int) (randomNumber*(size));
+						randomColuna= (int) (randomNumber*(size));	//NÃO EXISTEM RESTRIÇÕES AO NÍVEL DA COLUNA ESCOLHIDA
 						
 						//escolher uma linha onde pode começar
 						randomNumber=Math.random();
-						randomLinha= (int) (randomNumber*(size-word.length()) + word.length());
+						randomLinha= (int) (randomNumber*(size-word.length()) + word.length()); //MAS EXISTEM RESTRIÇÕES QUANTO À LINHA PORQUE A PALAVRA TEM DE COMEÇAR NUMA POSIÇÃO ENTRE <TAMANHO DA PALAVRA> E <TAMANHO DA MATRIZ> PARA QUE A PALAVRA SEJA ESCRITA DE BAIXO PARA CIMA
 						
 						if(randomLinha<0) {
 							break;
@@ -219,11 +219,11 @@ public class WSGenerator {
 					case 4: //SENTIDO: BAIXO
 						//escolher uma coluna aleatoria
 						randomNumber=Math.random();
-						randomColuna= (int) (randomNumber*(size));
+						randomColuna= (int) (randomNumber*(size)); //NÃO EXISTEM RESTRIÇÕES AO NIVEL DA COLUNA
 						
 						//escolher uma linha onde pode começar
 						randomNumber=Math.random();
-						randomLinha= (int) (randomNumber*(size-(word.length()-1)));
+						randomLinha= (int) (randomNumber*(size-(word.length()-1))); //MAS A PALAVRA TEM DE COMEÇAR NUMA LINHA ENTRE 0 E <TAMANHO DA MATRIZ - TAMANHO DA PALAVRA>
 						
 						if(randomLinha<0) {
 							break;
@@ -378,7 +378,7 @@ public class WSGenerator {
 			for (int x = 0; x < size; x++) {
 				if (m[y][x] == 0) {
 					Random r = new Random();
-					char c = (char) (r.nextInt(26) + 'A');
+					char c = (char) (r.nextInt(26) + 'A'); // ESCOLHE ALEATORIAMENTE UMA LETRA MAISCULA PARA PREENCHER A POSIÇÃO DA MATRIZ
 					m[y][x] = c;
 				}
 			}
