@@ -6,24 +6,25 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class WSSolver {
-	private static LinkedHashMap<String, LinkedList<String>> palavras = new LinkedHashMap<String, LinkedList<String>>();
-	private static char[][] sopa = new char[50][50];// ver esta merda depois
-	private static int l = 0;
-	private static int c = 0;
-	private static boolean timing = false;
+	private static LinkedHashMap<String, LinkedList<String>> palavras = new LinkedHashMap<String, LinkedList<String>>(); // Estrutura de dados que guarda a palavra a ser procurada e os respetivos detalhes relativos à sopa de letras
+	private static char[][] matrix_soup = new char[50][50]; // Matriz onde vai ser guardada a sopa de letras
+	private static int l = 0; // Número de linhas da matriz (sopa de letras)
+	private static int c = 0; // Número de colunas da matriz (sopa de letras)
+	private static boolean timing = false; // Flag para verificar se é necessário ter em conta o tempo de execução
+	private static double startTime = 0; // Hora a que o programa foi iniciado 
 
 	enum Move {
 		initial, left, right, up, down, upleft, downleft, downright, upright
 	}
 
-	public static void main(final String[] args) {
-		double startTime = 0;
+	public static void main(String[] args) {
+		// Verificação das opções de entrada
 		if (args.length == 2) {
 			if (args[0].equals("-timing")) {
+				// Se é introduzida a opção de visualização de tempo
 				timing = true;
 				startTime = System.currentTimeMillis();
-				// long estimatedTime = System.currentTimeMillis() - startTime;
-				if (args[1].substring(args[1].length() - 3).equals("txt")) {
+				if (args[1].substring(args[1].length() - 3).equals("txt")) { // Verificação se é um ficheiro .txt
 					readfile(args[1]);
 				} else {
 					System.err.println("Ficheiro não suportado!");
@@ -31,7 +32,8 @@ public class WSSolver {
 				}
 			}
 		} else if (args.length == 1) {
-			if (args[0].substring(args[0].length() - 3).equals("txt")) {
+			// Se é apenas introduzido o ficheiro de texto
+			if (args[0].substring(args[0].length() - 3).equals("txt")) { // Verificação se é um ficheiro .txt
 				readfile(args[0]);
 			} else {
 				System.err.println("Ficheiro não suportado!");
@@ -42,94 +44,103 @@ public class WSSolver {
 			System.exit(0);
 		}
 
-		for (final String search : palavras.keySet()) {
-			search_word(sopa, "", 0, 0, Move.initial, search, -1, -1);
+		// Procura recursiva por cada uma das palavras pretendidas
+		for (String search : palavras.keySet()) {
+			search_word(matrix_soup, "", 0, 0, Move.initial, search, -1, -1);
 		}
 
-		print(startTime);
+		// Impressão dos resultados
+		print();
 
 	}
 
-	private static void print(final double startTime) {
+	private static void print() {
+		// Se a opção de mostrar o tempo foi introduzida
 		if (timing) {
-			final double estimatedTime = (System.currentTimeMillis() - startTime) / 1000;
+			double estimatedTime = (System.currentTimeMillis() - startTime) / 1000;
 			System.out.format("Elapsed time (secs): %-1.3f\n", estimatedTime);
 		}
-		final int max_word_size = maxSize(palavras.keySet());
-		for (final String palavra : palavras.keySet()) {
+
+		int max_word_size = maxSize(palavras.keySet()); // Tamanho máximo de uma palavra do conjunto de palavras a ser procurado para uma impressão dos resultados correta
+
+		for (String palavra : palavras.keySet()) {
 			if (palavras.get(palavra).size() == 0) {
 				System.err.println("Palavra " + palavra + " não encontrada!");
-			} else if (palavras.get(palavra).size() > 4) {
-				System.out.format("%-" + max_word_size + "s\t%-2s\t%-5s\t%-8s\n", palavra, palavras.get(palavra).get(1),
-						palavras.get(palavra).get(2), palavras.get(palavra).get(3));
-				System.out.format("%-" + max_word_size + "s\t%-2s\t%-5s\t%-8s\n", palavra, palavras.get(palavra).get(5),
-						palavras.get(palavra).get(6), palavras.get(palavra).get(7));
+
+			} else if (palavras.get(palavra).size() > 3) {
+				// Para o caso de palavras capicuas
+				System.out.format("%-" + max_word_size + "s\t%-2s\t%-5s\t%-8s\n", palavra, palavras.get(palavra).get(0),
+						palavras.get(palavra).get(1), palavras.get(palavra).get(2));
+
+				System.out.format("%-" + max_word_size + "s\t%-2s\t%-5s\t%-8s\n", palavra, palavras.get(palavra).get(3),
+						palavras.get(palavra).get(4), palavras.get(palavra).get(5));
+
 			} else {
-				System.out.format("%-" + max_word_size + "s\t%-2s\t%-5s\t%-8s\n", palavra, palavras.get(palavra).get(1),
-						palavras.get(palavra).get(2), palavras.get(palavra).get(3));
+
+				System.out.format("%-" + max_word_size + "s\t%-2s\t%-5s\t%-8s\n", palavra, palavras.get(palavra).get(0),
+						palavras.get(palavra).get(1), palavras.get(palavra).get(2));
 			}
 
 		}
 
 	}
 
-	private static void readfile(final String filename) {
+	private static void readfile(String filename) {
 		try {
-			final File file = new File(filename);
-			final Scanner sc = new Scanner(file);
+			// Leitura do Ficheiro
+			File file = new File(filename);
+			Scanner sc = new Scanner(file);
 			int lastc = 0;
 			while (sc.hasNextLine()) {
-				final String line = sc.nextLine().trim();
+				String line = sc.nextLine().trim();
 
 				if (l == 0) {
-					lastc = line.length();
+					lastc = line.length(); // Tamanho da linha anterior
 				}
-				// verificar se não é maior que 50x50
+				// Verificar se não é maior que 50x50
 				if (line.length() > 50 || l > 50) {
 					System.err.println("Maior que 50x50");
 					System.exit(0);
 				}
 
-				final boolean hasLowercase = !line.equals(line.toUpperCase());
+				boolean hasLowercase = !line.equals(line.toUpperCase()); // Verificação se as letras são minúsculas
 				if (hasLowercase) {
 					// Palavras que procuramos
-					final String[] lista = line.toUpperCase().split("[,; ]");
+					String[] lista = line.toUpperCase().split("[,; ]");
 
-					for (final String word : lista) {
+					for (String palavra : lista) {
 						// Verificar se as palavras são maiores que 4
-						if (word.length() < 4) {
+						if (palavra.length() < 4) {
 							System.err.println("Palavras menores que 4!");
 							System.exit(0);
 						}
 						// Verificar se as palavras são alfanuméricas
-						else if (!word.matches("[a-zA-Z0-9]+")) {
+						else if (!palavra.matches("[a-zA-Z0-9]+")) {
 							System.err.println("Palavras não alfanuméricas!");
 							System.exit(0);
 						}
-					}
-
-					for (final String palavra : lista) {
-						for (final String palavra2 : lista) {
+						// Verificar se as palavras contém palavras duplicadas ou redundantes
+						for (String palavra2 : lista) {
 							if (palavra.contains(palavra2) && !palavra.equals(palavra2)) {
 								System.err.println(
 										"A lista de palavras contém palavras duplicadas ou frases redundantes!");
 								System.exit(0);
 							}
 						}
-						final LinkedList<String> details = new LinkedList<String>();
+						// Criação da estrutura de dados para guardar informações de cada palavras
+						LinkedList<String> details = new LinkedList<String>();
 						palavras.put(palavra, details);
 					}
-
 				} else {
-					// criação de matrix
+					// Criação da matrix (quando as letras são maiúsculas)
 					c = 0;
-					for (final char caracter : line.toCharArray()) {
-						sopa[l][c] = caracter;
+					for (char caracter : line.toCharArray()) {
+						matrix_soup[l][c] = caracter;
 						c++;
 					}
 					l++;
 				}
-				if (lastc != c) {
+				if (lastc != c) { // Verificação se o tamanho da linha anterior é o mesmo que o desta linha, necessário para a matriz ser quadrada
 					System.err.println("Não é quadrado!");
 					System.exit(0);
 				}
@@ -140,63 +151,82 @@ public class WSSolver {
 				System.exit(0);
 			}
 			sc.close();
-		} catch (final IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Erro a abrir o ficheiro!");
 		}
 	}
 
-	private static void search_word(final char[][] m, final String word, final int x, final int y, final Move move,
-			final String search, final int initial_x, final int initial_y) {
-		String w_temp;
-		final int w_size = word.length();
+	private static int maxSize(Set<String> lista) {
+		int max = 0;
+		for (String x : lista) {
+			if (x.length() > max) {
+				max = x.length();
+			}
+		}
+		return max;
+	}
 
-		if (move == Move.initial) {
-			for (int k = y; k < l; k++) {
-				for (int i = x; i < c; i++) {
-					if (m[k][i] == search.charAt(w_size)) {
-						w_temp = word + String.valueOf(m[k][i]);
+	private static void search_word(char[][] m, String word, int x, int y, Move move, String search, int initial_x,
+			int initial_y) {
+		String w_temp; // Palavra a ser enviada para o próximo ciclo da recursividade se nenhuma verificação falhar
+
+		int w_size = word.length(); // Tamanho atual da palavra que está a ser construída recursivamente
+
+		if (move == Move.initial) { // Quando a função é executada a primeira vez e não existe direção de movimento definido
+
+			// Percorrer a matriz durante a primeira execução da função
+			for (int yy = y; yy < l; yy++) {
+
+				for (int xx = x; xx < c; xx++) {
+
+					if (m[yy][xx] == search.charAt(w_size)) { // Se a letra da posição atual da matriz for igual à letra da palavra que está à procura, na posição do tamanho atual da palavra que está a ser construída recursivamente
+						w_temp = word + String.valueOf(m[yy][xx]); 
 						int w_temp_size = w_temp.length();
-						if (i - (search.length() - w_temp_size) >= 0) {
-							search_word(m, w_temp, i - 1, k, Move.left, search, i + 1, k + 1);
+
+						// Verificações, consoante o tamanho da palavra que está a ser procurada, se esta pode estar na sopa de letras na direção de movimento em questão, tendo em conta o tamanho da sopa de letras
+						if (xx - (search.length() - w_temp_size) >= 0) {
+							search_word(m, w_temp, xx - 1, yy, Move.left, search, xx + 1, yy + 1);
 						}
 
-						if (i + (search.length() - w_temp_size) <= c) {
-							search_word(m, w_temp, i + 1, k, Move.right, search, i + 1, k + 1);
+						if (xx + (search.length() - w_temp_size) <= c) {
+							search_word(m, w_temp, xx + 1, yy, Move.right, search, xx + 1, yy + 1);
 						}
 
-						if (k - (search.length() - w_temp_size) >= 0) {
-							search_word(m, w_temp, i, k - 1, Move.up, search, i + 1, k + 1);
+						if (yy - (search.length() - w_temp_size) >= 0) {
+							search_word(m, w_temp, xx, yy - 1, Move.up, search, xx + 1, yy + 1);
 						}
 
-						if (k + (search.length() - w_temp_size) <= l) {
-							search_word(m, w_temp, i, k + 1, Move.down, search, i + 1, k + 1);
+						if (yy + (search.length() - w_temp_size) <= l) {
+							search_word(m, w_temp, xx, yy + 1, Move.down, search, xx + 1, yy + 1);
 						}
 
-						if (i - (search.length() - w_temp_size) >= 0 && k - (search.length() - w_temp_size) >= 0) {
-							search_word(m, w_temp, i - 1, k - 1, Move.upleft, search, i + 1, k + 1);
+						if (xx - (search.length() - w_temp_size) >= 0 && yy - (search.length() - w_temp_size) >= 0) {
+							search_word(m, w_temp, xx - 1, yy - 1, Move.upleft, search, xx + 1, yy + 1);
 						}
 
-						if (i - (search.length() - w_temp_size) >= 0 && k + (search.length() - w_temp_size) <= l) {
-							search_word(m, w_temp, i - 1, k + 1, Move.downleft, search, i + 1, k + 1);
+						if (xx - (search.length() - w_temp_size) >= 0 && yy + (search.length() - w_temp_size) <= l) {
+							search_word(m, w_temp, xx - 1, yy + 1, Move.downleft, search, xx + 1, yy + 1);
 						}
 
-						if (k + (search.length() - w_temp_size) <= l && i + (search.length() - w_temp_size) <= c) {
-							search_word(m, w_temp, i + 1, k + 1, Move.downright, search, i + 1, k + 1);
+						if (yy + (search.length() - w_temp_size) <= l && xx + (search.length() - w_temp_size) <= c) {
+							search_word(m, w_temp, xx + 1, yy + 1, Move.downright, search, xx + 1, yy + 1);
 						}
 
-						if (k - (search.length() - w_temp_size) >= 0 && i + (search.length() - w_temp_size) <= c) {
-							search_word(m, w_temp, i + 1, k - 1, Move.upright, search, i + 1, k + 1);
+						if (yy - (search.length() - w_temp_size) >= 0 && xx + (search.length() - w_temp_size) <= c) {
+							search_word(m, w_temp, xx + 1, yy - 1, Move.upright, search, xx + 1, yy + 1);
 						}
 					}
 				}
 			}
 
 		} else {
-			if (m[y][x] == search.charAt(w_size)) {
+			if (m[y][x] == search.charAt(w_size)) { // Se a letra da posição atual da matriz for igual à letra da palavra que está à procura, na posição do tamanho atual da palavra que está a ser construída recursivamente
 				w_temp = word + String.valueOf(m[y][x]);
+
+				// Verificação se a palavra construida até aqui é a palavra desejada
 				if (w_temp.equals(search)) {
-					palavras.get(search).add(search);
+					// Ao se verificar, adição dos detalhes na estrutura de dados e término do ciclo
 					palavras.get(search).add(String.valueOf(search.length()));
 					palavras.get(search).add((String.valueOf(initial_y) + "," + String.valueOf(initial_x)));
 					palavras.get(search).add(String.valueOf(move));
@@ -205,6 +235,8 @@ public class WSSolver {
 				}
 				int w_temp_size = w_temp.length();
 
+				// Verificações, consoante o tamanho da palavra que está a ser procurada, se esta pode estar na sopa de letras na direção de movimento em questão, tendo em conta o tamanho da sopa de letras
+				// A pesquisa só segue a direção de movimento definida anteriormente
 				if (x - (search.length() - w_temp_size) >= 0 && move == Move.left) {
 					search_word(m, w_temp, x - 1, y, Move.left, search, initial_x, initial_y);
 				}
@@ -242,16 +274,5 @@ public class WSSolver {
 				}
 			}
 		}
-		return;
-	}
-
-	private static int maxSize(final Set<String> lista) {
-		int max = 0;
-		for (final String x : lista) {
-			if (x.length() > max) {
-				max = x.length();
-			}
-		}
-		return max;
 	}
 }
