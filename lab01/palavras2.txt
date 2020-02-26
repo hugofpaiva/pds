@@ -1,0 +1,6 @@
+estudante vela;rafael
+palestra
+Sala
+Gomes
+Polo
+Agueda;computador;telefone cabeca

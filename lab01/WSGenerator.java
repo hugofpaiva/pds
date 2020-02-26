@@ -14,7 +14,7 @@ public class WSGenerator {
 	static String stringPalavras=""; //VARIAVEL QUE GUARDA A ESTRUTURA INICIAL DAS PALAVRAS
 
 	public static void main(String[] args) {
-		String filename="palavras.txt"; //NOME PADRÃO DO FICHEIRO (PARA O CASO DE O UTILIZADOR NÃO ESPECIFICAR O NOME DO FICHEIRO)
+		String filename=""; 
 		
 		/*
 			*
@@ -63,7 +63,7 @@ public class WSGenerator {
 							palavras.add(s);
 						}
 						if(s.length() > size){ //AS PALAVRAS NÃO PODEM SER MAIORES DO QUE A MATRIZ
-							System.out.println("A palavra não pode ser maior do que a sopa de letras");
+							System.out.println("A palavra não pode ser maior do que a sopa de letras!");
 							System.exit(0);
 						}
 					}
@@ -73,14 +73,14 @@ public class WSGenerator {
 						palavras.add(linha);
 					}
 					if(linha.length() > size){ //AS PALAVRAS NÃO PODEM SER MAIORES DO QUE A MATRIZ
-						System.out.println("A palavra não pode ser maior do que a sopa de letras");
+						System.out.println("A palavra não pode ser maior do que a sopa de letras!");
 						System.exit(0);
 					}
 		    	}
 		  	}
 		    sc.close();
 		}catch (IOException e) {
-			System.out.println("O ficheiro nao existe");
+			System.out.println("O ficheiro não existe!");
 			System.exit(0);
 		}
 
@@ -108,7 +108,7 @@ public class WSGenerator {
 			* 	.ESCOLHA ALEATÓRIA DO SENTIDO QUE A PALAVRA VAI ADOTAR
 			*	.ESCOLHA ALEATÓRIA DE UMA POSIÇÃO INICIAL COM BASE NAS POSIÇÕES EM QUE PODE COMEÇAR
 			* NÚMERO ALEATÓRIO CORRESPONDENTE AO SENTIDO ADOTADO:
-			*	.DIREITA-ESQUURDA 			(1)
+			*	.DIREITA-ESQUERDA 			(1)
 			*	.ESQUERDA-DIREITA 			(2)
 			*	.BAIXO-CIMA					(3)
 			*	.CIMA-BAIXO					(4)
@@ -119,9 +119,14 @@ public class WSGenerator {
 			*
 			*
 		*/
-		boolean wrote = false; //VARIAVEL QUE INDICA SE A PALAVRA PÔDE SER ESCRITA OU NÃO
+		boolean wrote = false; //VARIAVEL QUE INDICA SE A PALAVRA PODE SER ESCRITA OU NÃO
+		double startTime = System.currentTimeMillis(); //HORA DE COMEÇO DA CRIAÇÃO DA MATRIZ
 		for(String word : palavras) {
 			while(!wrote){
+				if(((System.currentTimeMillis() - startTime) / 1000 )>1){ //VERIFICA SE JÁ FORAM FEITAS DEMASIADAS TENTATIVAS (MAIS DE 1 SEGUNDO)
+					System.out.println("Não existe espaço para mais palavras. Ficou tudo ocupado ao tentar colocar:"+word);
+					System.exit(0);
+				}
 				double randomInteger = Math.random();  //
 				randomInteger = randomInteger * 8 + 1; // ESCOLHA ALEATÓRIA DE UM SENTIDO (CIMA, BAIXO, ESQUERDA, DIREITA, DIAGONAIS) 
 				int randomInt = (int) randomInteger;   //
