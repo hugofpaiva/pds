@@ -7,35 +7,47 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class WSGenerator {
-	static List<String> palavras=new ArrayList<String>();
-	//dimenções
-	static int size=12;
-	static char m[][] = new char[50][50];
-	static String saveFile;
-	static String stringPalavras="";
+	static List<String> palavras=new ArrayList<String>(); //LISTA DE PALAVRAS A SEREM ENCONTRADAS
+	static int size=12; //DIMENCOES DA MATRIZ (O PADRÃO É 12 PARA O CASO DE O UTILIZADOR OPTAR POR NÃO ESCOLHER UM NUMERO DE LINHAS/COLUNAS)
+	static char m[][] = new char[50][50]; //MATRIZ DA SOPA DE LETRAS
+	static String saveFile; //NOME DO FICHEIRO QUE VAI SER GUARDADO
+	static String stringPalavras=""; //VARIAVEL QUE GUARDA A ESTRUTURA INICIAL DAS PALAVRAS
 
 	public static void main(String[] args) {
-		String filename="palavrasParaSopa.txt";
+		String filename="palavras.txt"; //NOME PADRÃO DO FICHEIRO (PARA O CASO DE O UTILIZADOR NÃO ESPECIFICAR O NOME DO FICHEIRO)
 		
+		/*
+			*
+			*
+			* PROCESSAMENTO DAS OPÇÕES
+			*
+			*
+		*/
 		for(int i=0; i<args.length; i++) {
 			switch(args[i]) {
-				case "-i":
+				case "-i": //OPÇAO DE ESCOLHA DO FICHEIRO QUE CONTÉM AS PALAVRAS
 					filename=args[i+1];
 					break;
-				case "-s":
+				case "-s": //OPÇÃO DE ESCOLHA DO TAMANHO DA SOPA DE LETRAS
 					size=Integer.valueOf(args[i+1]);
 					if(size>50){
 						System.out.println("A tabela não pode ser maior do que 50x50");
 						System.exit(0);
 					}
 					break;
-				case "-o":
+				case "-o": //OPÇÃO DE ESCOLHA DO NOME DO FICHEIRO QUE GUARDA A SOPA DE LETRAS
 					saveFile=args[i+1];
 					break;
 				default: break;
 			}
 		}
-		//leitura do ficheiro
+		/*
+			*
+			*
+			* LEITURA DO FICHEIRO
+			*
+			*
+		*/
 		try {
 			File file = new File(filename); 
 		    Scanner sc = new Scanner(file); 
@@ -46,13 +58,23 @@ public class WSGenerator {
 
 		    	if(linha.contains(",") || linha.contains(";") || linha.contains(" ")) {
 		    		String[] lista = linha.split("[,; ]");
-		    		for(String s : lista)
-					if(s.length() >= 4){
-						palavras.add(s);
+		    		for(String s : lista){
+						if(s.length() >= 4){
+							palavras.add(s);
+						}
+						if(s.length() > size){
+							System.out.println("A palavra não pode ser maior do que a sopa de letras");
+							System.exit(0);
+						}
 					}
+					
 		    	}else {
 					if(linha.length() >= 4){
 						palavras.add(linha);
+					}
+					if(linha.length() > size){
+						System.out.println("A palavra não pode ser maior do que a sopa de letras");
+						System.exit(0);
 					}
 		    	}
 		  	}
@@ -61,16 +83,51 @@ public class WSGenerator {
 			System.out.println("O ficheiro nao existe");
 			System.exit(0);
 		}
+
+		/*
+			*
+			*
+			* VERIFICAÇÃO DE PALAVRAS REPETIDAS OU REDUNDANTES
+			*
+			*
+		*/
+		for (String palavra : palavras) {
+			for (String palavra2 : palavras) {
+				if (palavra.contains(palavra2) && !palavra.equals(palavra2)) {
+					System.err.println("A lista de palavras contém palavras duplicadas ou frases redundantes!");
+					System.exit(0);
+				}
+			}
+		}
 		
-		boolean wrote = false;
+		/*
+			*
+			*
+			* POSICIONAMENTO DAS PALAVRAS NA MATRIZ
+			* TEM EM CONTA:
+			* 	.ESCOLHA ALEATÓRIA DO SENTIDO QUE A PALAVRA VAI ADOTAR
+			*	.ESCOLHA ALEATÓRIA DE UMA POSIÇÃO INICIAL COM BASE NAS POSIÇÕES EM QUE PODE COMEÇAR
+			* NÚMERO ALEATÓRIO CORRESPONDENTE AO SENTIDO ADOTADO:
+			*	.DIREITA-ESQUURDA 			(1)
+			*	.ESQUERDA-DIREITA 			(2)
+			*	.BAIXO-CIMA					(3)
+			*	.CIMA-BAIXO					(4)
+			*	.DIAGONAL CIMA ESQUERDA		(5)
+			*	.DIAGONAL BAIXO ESQUERDA 	(6)
+			*	.DIAGONAL BAIXO DIREITA		(7)
+			*	.DIAGONAL CIMA DIREITA		(8)
+			*
+			*
+		*/
+		boolean wrote = false; //VARIAVEL QUE INDICA SE A PALAVRA PÔDE SER ESCRITA OU NÃO
 		for(String word : palavras) {
 			while(!wrote){
-				double randomInteger = Math.random();
-				randomInteger = randomInteger * 8 + 1;
-				int randomInt = (int) randomInteger;
+				double randomInteger = Math.random();  //
+				randomInteger = randomInteger * 8 + 1; // ESCOLHA ALEATÓRIA DE UM SENTIDO (CIMA, BAIXO, ESQUERDA, DIREITA, DIAGONAIS) 
+				int randomInt = (int) randomInteger;   //
 
 				switch(randomInt) {
-					case 1:
+					case 1: //SENTIDO: ESQUERDA
 						//escolher uma linha aleatoria
 						double randomNumber=Math.random();
 						int randomLinha= (int) (randomNumber*(size));
@@ -100,7 +157,7 @@ public class WSGenerator {
 						}
 						
 						break;
-					case 2: 
+					case 2: //SENTIDO: DIREITA
 						//escolher uma linha aleatoria
 						randomNumber=Math.random();
 						randomLinha= (int) (randomNumber*(size));
@@ -129,7 +186,7 @@ public class WSGenerator {
 							wrote=true;
 						}
 						break;
-					case 3: 
+					case 3: //SENTIDO: CIMA
 						//escolher uma coluna aleatoria
 						randomNumber=Math.random();
 						randomColuna= (int) (randomNumber*(size));
@@ -159,7 +216,7 @@ public class WSGenerator {
 						}
 						
 						break;
-					case 4: 
+					case 4: //SENTIDO: BAIXO
 						//escolher uma coluna aleatoria
 						randomNumber=Math.random();
 						randomColuna= (int) (randomNumber*(size));
@@ -188,7 +245,7 @@ public class WSGenerator {
 							wrote=true;
 						}
 						break;
-					case 5: 
+					case 5: //SENTIDO: DIAGONAL CIMA ESQUEDA
 						//escolha da coluna
 						randomNumber=Math.random();
 						randomColuna= (int) (randomNumber*(size-word.length())+word.length());
@@ -215,7 +272,7 @@ public class WSGenerator {
 							wrote=true;
 						}
 						break;
-					case 6: 
+					case 6: //SENTIDO: DIAGONAL BAIXO ESQUEDA
 						//escolher a coluna em que começa
 						randomNumber=Math.random();
 						randomColuna= (int) ((randomNumber*(size-word.length()))+word.length());
@@ -249,7 +306,7 @@ public class WSGenerator {
 						
 						
 						break;
-					case 7:
+					case 7: //SENTIDO: DIAGONAL BAIXO DIREITA
 						//escolher a coluna em que começa
 						randomNumber=Math.random();
 						randomColuna= (int) (randomNumber*(size-(word.length()-1)));
@@ -276,7 +333,7 @@ public class WSGenerator {
 						}
 						
 						break;
-					case 8: 
+					case 8: //SENTIDO: DIAGONAL CIMA DIREITA
 						//escolher uma linha onde pode começar
 						randomNumber=Math.random();
 						randomLinha= (int) (randomNumber*(size-word.length()) + word.length());
@@ -310,9 +367,13 @@ public class WSGenerator {
 
 			wrote=false;
 		}
-		
-		
-		//GERAR O RESTO DAS LETRAS
+		/*
+			*
+			*
+			* CÓDIGO QUE PREENCHE O RESTO DA MATRIZ COM LETRAS ALEATÓRIAS
+			*
+			*
+		*/
 		for (int y = 0; y < size; y++) {
 			for (int x = 0; x < size; x++) {
 				if (m[y][x] == 0) {
@@ -323,7 +384,13 @@ public class WSGenerator {
 			}
 		}
 		
-		//MOSTRAR TODA A TABELA
+		/*
+			*
+			*
+			* MOSTRA TODA A TABELA DA SOPA DE LETRAS
+			*
+			*
+		*/
 		int counter=0;
 		for (char[] word : m) {
 			counter++;
@@ -332,10 +399,22 @@ public class WSGenerator {
 			}
 		}
 		
-		//mostrar as palavras
+		/*
+			*
+			*
+			* MOSTRA TODAS AS PALAVRAS COM A FORMATAÇÃO ORIGINAL
+			*
+			*
+		*/
 		System.out.println(stringPalavras.toLowerCase());
 
-		//GRAVAR NO FICHEIRO
+		/*
+			*
+			*
+			* GUARDAR A SOPA DE LETRAS, BEM COMO AS PALAVRAS NUM FICHEIRO (SE O UTILIZADOR ASSIM OPTAR)
+			*
+			*
+		*/
 		if(saveFile!=null){
 			try {
 	            FileWriter writer = new FileWriter(saveFile, false);
@@ -353,6 +432,12 @@ public class WSGenerator {
 	            e.printStackTrace();
 	        }
 		}
-		
+		/*
+			*
+			*
+			* FIM DO FICHEIRO
+			*
+			*
+		*/
 	}
 }
