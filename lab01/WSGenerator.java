@@ -13,7 +13,7 @@ public class WSGenerator {
 	static char m[][] = new char[50][50];
 	static String saveFile;
 	static String stringPalavras="";
-	
+
 	public static void main(String[] args) {
 		String filename="palavrasParaSopa.txt";
 		
@@ -43,16 +43,17 @@ public class WSGenerator {
 		    while (sc.hasNextLine()){
 		    	String linha=sc.nextLine().trim().toUpperCase();
 		    	stringPalavras+=linha+"\n";
+
 		    	if(linha.contains(",") || linha.contains(";") || linha.contains(" ")) {
 		    		String[] lista = linha.split("[,; ]");
 		    		for(String s : lista)
-					if(s.length() > 4){
+					if(s.length() >= 4){
 						palavras.add(s);
 					}
 		    	}else {
-				if(linha.length() > 4){
-					palavras.add(linha);
-				}
+					if(linha.length() >= 4){
+						palavras.add(linha);
+					}
 		    	}
 		  	}
 		    sc.close();
@@ -67,10 +68,9 @@ public class WSGenerator {
 				double randomInteger = Math.random();
 				randomInteger = randomInteger * 8 + 1;
 				int randomInt = (int) randomInteger;
-				
+
 				switch(randomInt) {
-					case 1: 
-						
+					case 1:
 						//escolher uma linha aleatoria
 						double randomNumber=Math.random();
 						int randomLinha= (int) (randomNumber*(size));
@@ -307,6 +307,7 @@ public class WSGenerator {
 					default: break;
 				}
 			}
+
 			wrote=false;
 		}
 		
