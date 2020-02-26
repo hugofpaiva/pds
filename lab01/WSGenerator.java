@@ -13,6 +13,7 @@ public class WSGenerator {
 	static char m[][] = new char[50][50];
 	static String saveFile;
 	static String stringPalavras="";
+	
 	public static void main(String[] args) {
 		String filename="palavrasParaSopa.txt";
 		
