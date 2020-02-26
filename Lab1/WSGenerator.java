@@ -1,38 +1,60 @@
-package LAB1;
-
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class exe2 {
+public class WSGenerator {
 	static List<String> palavras=new ArrayList<String>();
 	//dimenções
-	static int size;
+	static int size=12;
 	static char m[][] = new char[50][50];
+	static String saveFile;
+	static String stringPalavras="";
 	public static void main(String[] args) {
+		String filename="palavrasParaSopa.txt";
 		
+		for(int i=0; i<args.length; i++) {
+			switch(args[i]) {
+				case "-i":
+					filename=args[i+1];
+					break;
+				case "-s":
+					size=Integer.valueOf(args[i+1]);
+					if(size>50){
+						System.out.println("A tabela não pode ser maior do que 50x50");
+						System.exit(0);
+					}
+					break;
+				case "-o":
+					saveFile=args[i+1];
+					break;
+				default: break;
+			}
+		}
 		//leitura do ficheiro
 		try {
-			File file = new File("./src/LAB1/palavrasParaSopa.txt"); 
+			File file = new File(filename); 
 		    Scanner sc = new Scanner(file); 
 		  
 		    while (sc.hasNextLine()){
-		    	String linha=sc.nextLine().trim();
-		    	
+		    	String linha=sc.nextLine().trim().toUpperCase();
+		    	stringPalavras+=linha+"\n";
 		    	if(linha.contains(",") || linha.contains(";") || linha.contains(" ")) {
 		    		String[] lista = linha.split("[,; ]");
 		    		for(String s : lista)
-		    			palavras.add(s);
-		    		
+					if(s.length() > 4){
+						palavras.add(s);
+					}
 		    	}else {
-		    		palavras.add(linha);
+				if(linha.length() > 4){
+					palavras.add(linha);
+				}
 		    	}
 		  	}
 		    sc.close();
-		    size=12;
 		}catch (IOException e) {
 			System.out.println("O ficheiro nao existe");
 			System.exit(0);
@@ -300,10 +322,35 @@ public class exe2 {
 		}
 		
 		//MOSTRAR TODA A TABELA
+		int counter=0;
 		for (char[] word : m) {
-			System.out.println(word);
+			counter++;
+			if(counter<=size) {
+				System.out.println(word);
+			}
 		}
 		
+		//mostrar as palavras
+		System.out.println(stringPalavras.toLowerCase());
+
+		//GRAVAR NO FICHEIRO
+		if(saveFile!=null){
+			try {
+	            FileWriter writer = new FileWriter(saveFile, false);
+	            counter=0;
+	    		for (char[] word : m) {
+	    			counter++;
+	    			if(counter<=size) {
+	    				writer.write(word);
+	    				writer.write("\r\n");
+	    			}
+	    		}
+	    		writer.write(stringPalavras.toLowerCase());
+	            writer.close();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
 		
 	}
 }
