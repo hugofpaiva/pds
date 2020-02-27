@@ -6,25 +6,25 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class WSSolver {
-	private static LinkedHashMap<String, LinkedList<String>> palavras = new LinkedHashMap<String, LinkedList<String>>(); // Estrutura de dados que guarda a palavra a ser procurada e os respetivos detalhes relativos à sopa de letras
-	private static char[][] matrix_soup = new char[50][50]; // Matriz onde vai ser guardada a sopa de letras
-	private static int l = 0; // Número de linhas da matriz (sopa de letras)
-	private static int c = 0; // Número de colunas da matriz (sopa de letras)
-	private static boolean timing = false; // Flag para verificar se é necessário ter em conta o tempo de execução
-	private static double startTime = 0; // Hora a que o programa foi iniciado 
+	private static LinkedHashMap<String, LinkedList<String>> palavras = new LinkedHashMap<String, LinkedList<String>>(); // ESTRUTURA DE DADOS QUE GUARDA  PALAVRA A SE PROCURADA E OS RESPETIVOS DETALHES RELATIVOS À SOPE ADE LETRAS
+	private static char[][] matrix_soup = new char[50][50]; // ATRIZ ONDE VAI SER GUARDADA A SOPA DE LETRAS
+	private static int l = 0; // NÚMERO DE LINHAS DA MATRIZ (SOPA DE LETRAS)
+	private static int c = 0; // NÚMERO DE COLUNAS DA MATRIZ (SOPA DE LETRAS)
+	private static boolean timing = false; // FLAG PARA VERIFICAR SE É NECESSÁRIO TER EM CONTA O TEMPO DE EXECUÇÃO
+	private static double startTime = 0; // HORA A QUE O PROGRAMA FOI INICIADO 
 
 	enum Move {
 		initial, left, right, up, down, upleft, downleft, downright, upright
 	}
 
 	public static void main(String[] args) {
-		// Verificação das opções de entrada
+		// VERIFICAÇÃO DAS OPÇÕES DE ENTRADA
 		if (args.length == 2) {
 			if (args[0].equals("-timing")) {
-				// Se é introduzida a opção de visualização de tempo
+				// SE É INTRODUZIDA A OPÇÃO DE VISUALIZAÇÃO DE TEMPO
 				timing = true;
 				startTime = System.currentTimeMillis();
-				if (args[1].substring(args[1].length() - 3).equals("txt")) { // Verificação se é um ficheiro .txt
+				if (args[1].substring(args[1].length() - 3).equals("txt")) { // VERIFICAÇÃO SE É UM FICHEIRO .TXT
 					readfile(args[1]);
 				} else {
 					System.err.println("Ficheiro não suportado!");
@@ -32,8 +32,8 @@ public class WSSolver {
 				}
 			}
 		} else if (args.length == 1) {
-			// Se é apenas introduzido o ficheiro de texto
-			if (args[0].substring(args[0].length() - 3).equals("txt")) { // Verificação se é um ficheiro .txt
+			// SE É APENAS INTRODUZIDO O FICHEIRO DE TEXTO
+			if (args[0].substring(args[0].length() - 3).equals("txt")) { // VERIFICAÇÃO SE É UM FICHEIRO .TXT
 				readfile(args[0]);
 			} else {
 				System.err.println("Ficheiro não suportado!");
@@ -44,31 +44,31 @@ public class WSSolver {
 			System.exit(0);
 		}
 
-		// Procura recursiva por cada uma das palavras pretendidas
+		// PROCURA RECURSIVA POR CADA UMA DAS PALAVRAS PRETENDIDAS
 		for (String search : palavras.keySet()) {
 			search_word(matrix_soup, "", 0, 0, Move.initial, search, -1, -1);
 		}
 
-		// Impressão dos resultados
+		// IMPRESSÃO DOS RESULTADOS
 		print();
 
 	}
 
 	private static void print() {
-		// Se a opção de mostrar o tempo foi introduzida
+		// SE A OPÇÃO DE MOSTRAR O TEMPO FOI INTRODUZIDA
 		if (timing) {
 			double estimatedTime = (System.currentTimeMillis() - startTime) / 1000;
 			System.out.format("Elapsed time (secs): %-1.3f\n", estimatedTime);
 		}
 
-		int max_word_size = maxSize(palavras.keySet()); // Tamanho máximo de uma palavra do conjunto de palavras a ser procurado para uma impressão dos resultados correta
+		int max_word_size = maxSize(palavras.keySet()); // TAMANHO MÁXIMO DE UMA PALAVRA DO CONJUNTO DE PALAVRAS A SER PROCURADO PARA UMA IMPRESSÃO DOS RESULTADOS CORRETA
 
 		for (String palavra : palavras.keySet()) {
 			if (palavras.get(palavra).size() == 0) {
 				System.err.println("Palavra " + palavra + " não encontrada!");
 
 			} else if (palavras.get(palavra).size() > 3) {
-				// Para o caso de palavras capicuas
+				// PARA O CASO DE PALAVRAS CAPICUAS
 				System.out.format("%-" + max_word_size + "s\t%-2s\t%-5s\t%-8s\n", palavra, palavras.get(palavra).get(0),
 						palavras.get(palavra).get(1), palavras.get(palavra).get(2));
 
@@ -87,7 +87,7 @@ public class WSSolver {
 
 	private static void readfile(String filename) {
 		try {
-			// Leitura do Ficheiro
+			// LEITURA DO FICHEIRO
 			File file = new File(filename);
 			Scanner sc = new Scanner(file);
 			int lastc = 0;
@@ -95,31 +95,31 @@ public class WSSolver {
 				String line = sc.nextLine().trim();
 
 				if (l == 0) {
-					lastc = line.length(); // Tamanho da linha anterior
+					lastc = line.length(); // TAMANHO DA LINHA ANTERIOR
 				}
-				// Verificar se não é maior que 50x50
+				// VERIFICAR SE NÃO É MAIOR QUE 50X50
 				if (line.length() > 50 || l > 50) {
 					System.err.println("Maior que 50x50");
 					System.exit(0);
 				}
 
-				boolean hasLowercase = !line.equals(line.toUpperCase()); // Verificação se as letras são minúsculas
+				boolean hasLowercase = !line.equals(line.toUpperCase()); // VERIFICAÇÃO SE AS LETRAS SÃO MINÚSCULAS
 				if (hasLowercase) {
-					// Palavras que procuramos
+					// PALAVRAS QUE PROCURAMOS
 					String[] lista = line.toUpperCase().split("[,; ]");
 
 					for (String palavra : lista) {
-						// Verificar se as palavras são maiores que 4
+						// VERIFICAR SE AS PALAVRAS SÃO MAIORES QUE 4
 						if (palavra.length() < 4) {
 							System.err.println("Palavras menores que 4!");
 							System.exit(0);
 						}
-						// Verificar se as palavras são alfanuméricas
+						// VERIFICAR SE AS PALAVRAS SÃO ALFANUMÉRICAS
 						else if (!palavra.matches("[a-zA-Z0-9]+")) {
 							System.err.println("Palavras não alfanuméricas!");
 							System.exit(0);
 						}
-						// Verificar se as palavras contém palavras duplicadas ou redundantes
+						// VERIFICAR SE AS PALAVRAS CONTÉM PALAVRAS DUPLICADAS OU REDUNDANTES
 						for (String palavra2 : lista) {
 							if (palavra.contains(palavra2) && !palavra.equals(palavra2)) {
 								System.err.println(
@@ -127,12 +127,12 @@ public class WSSolver {
 								System.exit(0);
 							}
 						}
-						// Criação da estrutura de dados para guardar informações de cada palavras
+						// CRIAÇÃO DA ESTRUTURA DE DADOS PARA GUARDAR INFORMAÇÕES DE CADA PALAVRAS
 						LinkedList<String> details = new LinkedList<String>();
 						palavras.put(palavra, details);
 					}
 				} else {
-					// Criação da matrix (quando as letras são maiúsculas)
+					// CRIAÇÃO DA MATRIX (QUANDO AS LETRAS SÃO MAIÚSCULAS)
 					c = 0;
 					for (char caracter : line.toCharArray()) {
 						matrix_soup[l][c] = caracter;
@@ -140,7 +140,7 @@ public class WSSolver {
 					}
 					l++;
 				}
-				if (lastc != c) { // Verificação se o tamanho da linha anterior é o mesmo que o desta linha, necessário para a matriz ser quadrada
+				if (lastc != c) { // VERIFICAÇÃO SE O TAMANHO DA LINHA ANTERIOR É O MESMO QUE O DESTA LINHA, NECESSÁRIO PARA A MATRIZ SER QUADRADA
 					System.err.println("Não é quadrado!");
 					System.exit(0);
 				}
@@ -169,23 +169,23 @@ public class WSSolver {
 
 	private static void search_word(char[][] m, String word, int x, int y, Move move, String search, int initial_x,
 			int initial_y) {
-		String w_temp; // Palavra a ser enviada para o próximo ciclo da recursividade se nenhuma verificação falhar
+		String w_temp; // PALAVRA A SER ENVIADA PARA O PRÓXIMO CICLO DA RECURSIVIDADE SE NENHUMA VERIFICAÇÃO FALHAR
 
-		int w_size = word.length(); // Tamanho atual da palavra que está a ser construída recursivamente
+		int w_size = word.length(); // TAMANHO ATUAL DA PALAVRA QUE ESTÁ A SER CONSTRUÍDA RECURSIVAMENTE
 
-		if (move == Move.initial) { // Quando a função é executada a primeira vez e não existe direção de movimento definido
+		if (move == Move.initial) { // QUANDO A FUNÇÃO É EXECUTADA A PRIMEIRA VEZ E NÃO EXISTE DIREÇÃO DE MOVIMENTO DEFINIDO
 
-			// Percorrer a matriz durante a primeira execução da função
+			// PERCORRER A MATRIZ DURANTE A PRIMEIRA EXECUÇÃO DA FUNÇÃO
 			for (int yy = y; yy < l; yy++) {
 
 				for (int xx = x; xx < c; xx++) {
 
-					if (m[yy][xx] == search.charAt(w_size)) { // Se a letra da posição atual da matriz for igual à letra da palavra que está à procura, na posição do tamanho atual da palavra que está a ser construída recursivamente
+					if (m[yy][xx] == search.charAt(w_size)) { // SE A LETRA DA POSIÇÃO ATUAL DA MATRIZ FOR IGUAL À LETRA DA PALAVRA QUE ESTÁ À PROCURA, NA POSIÇÃO DO TAMANHO ATUAL DA PALAVRA QUE ESTÁ A SER CONSTRUÍDA RECURSIVAMENTE
 						w_temp = word + String.valueOf(m[yy][xx]); 
 						int w_temp_size = w_temp.length();
 
-						// Verificações, consoante o tamanho da palavra que está a ser procurada, se esta pode estar na sopa de letras na direção de movimento em questão, tendo em conta o tamanho da sopa de letras
-						if (xx - (search.length() - w_temp_size) >= 0) {
+						// VERIFICAÇÕES, CONSOANTE O TAMANHO DA PALAVRA QUE ESTÁ A SER PROCURADA, SE ESTA PODE ESTAR NA SOPA DE LETRAS NA DIREÇÃO DE MOVIMENTO EM QUESTÃO, TENDO EM CONTA O TAMANHO DA SOPA DE LETRAS
+						if (xx - (search.length() - w_temp_size) >= 0) { // NESTE CASO, COMO VAI PARA A ESQUERDA, É SUBSTRAIDO AO X ATUAL O RESTO DO TAMANHO DA PALAVRA QUE ESTAMOS À PROCURA, PARA VERIFICAR SE ESTA CABE NA MATRIZ
 							search_word(m, w_temp, xx - 1, yy, Move.left, search, xx + 1, yy + 1);
 						}
 
@@ -221,12 +221,12 @@ public class WSSolver {
 			}
 
 		} else {
-			if (m[y][x] == search.charAt(w_size)) { // Se a letra da posição atual da matriz for igual à letra da palavra que está à procura, na posição do tamanho atual da palavra que está a ser construída recursivamente
+			if (m[y][x] == search.charAt(w_size)) { // SE A LETRA DA POSIÇÃO ATUAL DA MATRIZ FOR IGUAL À LETRA DA PALAVRA QUE ESTÁ À PROCURA, NA POSIÇÃO DO TAMANHO ATUAL DA PALAVRA QUE ESTÁ A SER CONSTRUÍDA RECURSIVAMENTE
 				w_temp = word + String.valueOf(m[y][x]);
 
-				// Verificação se a palavra construida até aqui é a palavra desejada
+				// VERIFICAÇÃO SE A PALAVRA CONSTRUIDA ATÉ AQUI É A PALAVRA DESEJADA
 				if (w_temp.equals(search)) {
-					// Ao se verificar, adição dos detalhes na estrutura de dados e término do ciclo
+					// AO SE VERIFICAR, ADIÇÃO DOS DETALHES NA ESTRUTURA DE DADOS E TÉRMINO DO CICLO
 					palavras.get(search).add(String.valueOf(search.length()));
 					palavras.get(search).add((String.valueOf(initial_y) + "," + String.valueOf(initial_x)));
 					palavras.get(search).add(String.valueOf(move));
@@ -235,8 +235,8 @@ public class WSSolver {
 				}
 				int w_temp_size = w_temp.length();
 
-				// Verificações, consoante o tamanho da palavra que está a ser procurada, se esta pode estar na sopa de letras na direção de movimento em questão, tendo em conta o tamanho da sopa de letras
-				// A pesquisa só segue a direção de movimento definida anteriormente
+				// VERIFICAÇÕES, CONSOANTE O TAMANHO DA PALAVRA QUE ESTÁ A SER PROCURADA, SE ESTA PODE ESTAR NA SOPA DE LETRAS NA DIREÇÃO DE MOVIMENTO EM QUESTÃO, TENDO EM CONTA O TAMANHO DA SOPA DE LETRAS
+				// A PESQUISA SÓ SEGUE A DIREÇÃO DE MOVIMENTO DEFINIDA ANTERIORMENTE
 				if (x - (search.length() - w_temp_size) >= 0 && move == Move.left) {
 					search_word(m, w_temp, x - 1, y, Move.left, search, initial_x, initial_y);
 				}
