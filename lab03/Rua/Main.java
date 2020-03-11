@@ -2,7 +2,11 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
+
 
 public class Main {
 	private static ArrayList<Familia> families = new ArrayList<Familia>(); // LISTA COM TODAS AS FAMÍLIAS
@@ -37,7 +41,6 @@ public class Main {
 	}
 
 	private static void run(String[] command) {
-		System.out.println(command[0]);
 		// PROCESSAMENTO DE COMANDOS
 		switch (command[0].toLowerCase()) {
 			case "load":
@@ -210,6 +213,7 @@ public class Main {
 			for (String member : list) {
 				System.out.println(member);
 			}
+			System.out.println();
 
 		} else {
 			System.err.println("No members!");
@@ -226,6 +230,8 @@ public class Main {
 			}
 			System.out.printf("\n");
 
+			Collections.sort(families, Collections.reverseOrder());
+			
 			for(Familia f : families){
 				counter++;
 				int countMembros=0; // VARIÁVEL QUE CONTA O NUMERO DE MEMBROS DE UMA FAMÍLIA

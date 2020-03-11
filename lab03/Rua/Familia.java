@@ -1,8 +1,9 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.stream.IntStream;
 
-public class Familia {
+public class Familia implements Comparable<Familia> {
 	private ArrayList<Pessoa> membros = new ArrayList<Pessoa>();// LISTA DE MEMBROS PERTENCENTES À FAMÍLIA
 	private int pos_in;											// POSIÇÃO INICIAL DOS TERRENOS
 	private int pos_fin;										// POSIÇÃO FINAL DOS TERRENOS
@@ -74,8 +75,15 @@ public class Familia {
 	// DEVOLVE AS POSIÇÕES DOS TERRENOS DA FAMÍLIA
 	public int[] getPosicoes() {
 		return IntStream.rangeClosed(pos_in, pos_fin).toArray();
+	}
+	
+	// DEVOLVE A QUANTIDADE DE TERRENOS DA FAMILIA
+	public int getSizePosicoes() {
+		return pos_fin-pos_in+1;
 
 	}
+	
+	
 	
 	// FUNÇÃO QUE RETORNA true SE JÁ EXISTIR UMA PESSOA COM O MESMO NOME NA FAMÍLIA 
 	public boolean searchIn(Pessoa p) {
@@ -95,5 +103,11 @@ public class Familia {
 			return false;
 		}
 	}
+	
+	// FUNÇÃO PARA ORDERNAR
+	public int compareTo(Familia f) 
+    { 
+        return this.getSizePosicoes() - f.getSizePosicoes(); 
+    } 
 
 }
