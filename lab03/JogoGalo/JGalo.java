@@ -1,5 +1,3 @@
-package lab03.JogoGalo;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -17,11 +15,15 @@ public class JGalo extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -3780928537820216588L;
 	private JPanel jPanel = null;
 	private JToggleButton bt[];
-	JGaloInterface jogo ; 
-
+	JGaloInterface jogo; 
+	
+	
+	
 	public JGalo(JGaloInterface myGreatGame) {
 		super("Jogo da Galinha");
 		jogo = myGreatGame;
+		
+		// inicio janela
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(300,300);
         setLocation(100,100);
@@ -61,6 +63,9 @@ public class JGalo extends JFrame implements ActionListener {
 	}
 
 	public static void main(String args[]) {
-		new JGalo(new JogoGalo('X'));
+		// INSTÂNCIA DO JOGO DO GALO
+		JogoGalo jogoo=new JogoGalo();
+		
+		new JGalo(jogoo);
 	}
 } 

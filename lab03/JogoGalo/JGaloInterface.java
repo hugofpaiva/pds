@@ -1,5 +1,5 @@
+package LAB3.JogoGalo;
 
-package lab03.JogoGalo;
 public interface JGaloInterface {
 	public abstract char getActualPlayer();
 	public abstract boolean setJogada(int lin, int col);
