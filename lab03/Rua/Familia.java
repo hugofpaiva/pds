@@ -24,11 +24,12 @@ public class Familia {
 	}
 	
 	public boolean searchIn(Pessoa p) {
-		if(membros.contains(p)) {
-			return false;
-		}else {
-			return true;
+		for(Pessoa x : membros) {
+			if(x.getName() == p.getName()) {
+				return false;
+			}
 		}
+		return true;
 	}
 	
 	

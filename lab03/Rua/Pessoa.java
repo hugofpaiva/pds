@@ -34,6 +34,10 @@ public class Pessoa{
 		
 		return true;
 	}
+	
+	public String getName() {
+		return this.nome;
+	}
 }
 
 
