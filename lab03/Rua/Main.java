@@ -232,7 +232,7 @@ public class Main {
 				for(Pessoa p : f.getMembros()){
 					countMembros++;
 					System.out.printf("%6d%" + (values[0]+1) + "s", counter, p.getName());
-					for(int i=1; i<=values[2]; i++){
+					for(int i=values[1]; i<=values[2]; i++){
 						if(i>=f.getPos_in() && i<=f.getPos_fin()){
 							System.out.printf("%4s", "X");
 						}else{
