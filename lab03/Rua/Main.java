@@ -38,7 +38,8 @@ public class Main {
 	}
 
 	private static void run(String[] command) {
-		switch (command[0]) {
+		System.out.println(command[0]);
+		switch (command[0].toLowerCase()) {
 		case "load":
 			if (command.length == 2) {
 				try {
@@ -79,7 +80,7 @@ public class Main {
 					&& Character.isDigit(command[3].charAt(0))) {
 				add(command[1], Integer.parseInt(command[2]), Integer.parseInt(command[3]));
 			} else {
-				System.err.println("Options incorrect for Add!");
+				System.err.println("Options incorrect for add!");
 				break;
 			}
 			break;
@@ -88,18 +89,19 @@ public class Main {
 				remove(command[1]);
 
 			} else {
-				System.err.println("Options incorrect for Add!");
+				System.err.println("Options incorrect for remove!");
 				break;
 			}
 			break;
 		case "list":
+			list();
 			break;
 		case "lookup":
 			if (command.length == 2) {
 				lookup(command[1]);
 
 			} else {
-				System.err.println("Options incorrect for Add!");
+				System.err.println("Options incorrect for lookup!");
 				break;
 			}
 
@@ -126,7 +128,7 @@ public class Main {
 		if (families.isEmpty()) {
 			Familia f = new Familia(p, pos_in, pos_fin);
 			families.add(f);
-			System.out.println("\n" +name + " adicionado(a) com sucesso à familia " + pos_in + "-" + pos_fin);
+			System.out.println("\n" + name + " adicionado(a) com sucesso à familia " + pos_in + "-" + pos_fin);
 		} else {
 			for (Familia f : families) {
 				int status = f.addMembro(p, pos_in, pos_fin);
@@ -157,15 +159,21 @@ public class Main {
 				if (p.getName().equals(name)) {
 					found = true;
 					f.getMembros().remove(p);
-					System.out.println(
-							"\n"+name + " removido(a) com sucesso à familia " + f.getPos_in() + "-" + f.getPos_fin());
-					return true;
-
+					if (f.getMembros().isEmpty()) {
+						// remove a familia se já não existir ninguém
+					}
+					families.remove(f);
 				}
+				System.out.println(
+						"\n" + name + " removido(a) com sucesso à familia " + f.getPos_in() + "-" + f.getPos_fin());
+				return true;
+
 			}
 		}
 
-		if (!found) {
+		if (!found)
+
+		{
 			System.err.println("\nMembro não existe!");
 		}
 		return false;
@@ -190,4 +198,24 @@ public class Main {
 			System.err.println("Membro não existe!");
 		}
 	}
+
+	private static void list() {
+		if (!families.isEmpty()) {
+			ArrayList<String> list = new ArrayList<String>();
+			for (Familia f : families) {
+				for (Pessoa p : f.getMembros()) {
+					list.add(p.getName() + " " + f.getPos_in() + " " + f.getPos_fin());
+				}
+			}
+			java.util.Collections.sort(list);
+			System.out.println();
+			for (String member : list) {
+				System.out.println(member);
+			}
+
+		} else {
+			System.err.println("No members!");
+		}
+	}
+
 }
