@@ -73,7 +73,7 @@ public class Main {
 			}
 			break;
 		case "map":
-			// code block
+			map();
 			break;
 		case "add":
 			if (command.length == 4 && Character.isDigit(command[2].charAt(0))
@@ -216,6 +216,43 @@ public class Main {
 		} else {
 			System.err.println("No members!");
 		}
+	}
+
+	private static void map() {
+		if (!families.isEmpty()) {
+			int[] values = maxNamePos();
+			System.out.printf("%6s%" + values[0] + "s", "FAMILY", "NAME");
+			for(int i = values[1]; i<= values[2]; i++) {
+				System.out.printf("%4d", i);
+
+			}
+			System.out.println();
+		} else {
+			System.err.println("No members!");
+		}
+	}
+
+	private static int[] maxNamePos() {
+		int[] values = new int[3];
+		values[0]=0; // max name size
+		values[1]=Integer.MAX_VALUE; // pos_in
+		values[2]=0; //pos_fin
+		for (Familia f : families) {
+			if(f.getPos_in()<values[1]) {
+				values[1]=f.getPos_in();
+			}
+			if(f.getPos_fin()> values[2]) {
+				values[2]=f.getPos_fin();
+			}
+			for (Pessoa p : f.getMembros()) {
+				if (values[0] < p.getName().length()) {
+					values[0] = p.getName().length();
+				}
+
+			}
+		}
+		return values;
+
 	}
 
 }
