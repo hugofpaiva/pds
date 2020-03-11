@@ -25,7 +25,7 @@ public class Familia {
 	
 	public boolean searchIn(Pessoa p) {
 		for(Pessoa x : membros) {
-			if(x.getName() == p.getName()) {
+			if(x.getName().equals(p.getName())) {
 				return false;
 			}
 		}
