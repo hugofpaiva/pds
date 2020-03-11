@@ -55,7 +55,7 @@ public class Main {
 								// VERIFICA SE COMEÇA PELO INTERVALO OU PELO NOME DA PESSOA
 								if (Character.isLetter(info[0].charAt(0))) {
 									add(info[0], Integer.parseInt(info[1]), Integer.parseInt(info[2]));
-								} else {
+								} else if (Character.isDigit(info[0].charAt(0))){
 									add(info[2], Integer.parseInt(info[0]), Integer.parseInt(info[1]));
 								}
 							}
