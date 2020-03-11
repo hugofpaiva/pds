@@ -1,4 +1,3 @@
-package LAB3.JogoGalo;
 
 public interface JGaloInterface {
 	public abstract char getActualPlayer();
