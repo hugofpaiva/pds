@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.IntStream;
@@ -25,13 +24,13 @@ public class Familia implements Comparable<Familia> {
 			// VERIFICA SE AS POSIÇÕES ATRIBUIDAS A UMA PESSOA SÃO IGUAIS ÀS DA FAMÍLIA EM QUESTÃO
 			if (checkPos(pos_in, pos_fin)) {
 				membros.add(m);
-				System.out.println("\n" + m.getName() + " adicionado(a) com sucesso à familia " + this.pos_in + "-" + this.pos_fin);
+				System.out.println("\n" + m.getName() + " added with sucess to the family " + this.pos_in + "-" + this.pos_fin);
 				return 0;
 			} else {
 				return 1;
 			}
 		} else {
-			System.err.println("Nome já existe!");
+			System.err.println("Name already exists!");
 			return 2;
 		}
 

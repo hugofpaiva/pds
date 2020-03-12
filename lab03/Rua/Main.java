@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -129,7 +128,7 @@ public class Main {
 			if (families.isEmpty()) {
 				Familia f = new Familia(p, pos_in, pos_fin);
 				families.add(f);
-				System.out.println("\n" + name + " adicionado(a) com sucesso à familia " + pos_in + "-" + pos_fin);
+				System.out.println("\n" + name + " added with sucess to the family " + pos_in + "-" + pos_fin);
 			} else {
 				for (Familia f : families) {
 					int status = f.addMembro(p, pos_in, pos_fin);
@@ -146,7 +145,7 @@ public class Main {
 				if (new_family) {
 					Familia f = new Familia(p, pos_in, pos_fin);
 					families.add(f);
-					System.out.println("\n" + name + " adicionado(a) com sucesso à familia " + pos_in + "-" + pos_fin);
+					System.out.println("\n" + name + " added with sucess to the family " + pos_in + "-" + pos_fin);
 
 				}
 			}
@@ -170,14 +169,14 @@ public class Main {
 					}
 				}
 				System.out.println(
-						"\n" + name + " removido(a) com sucesso à familia " + f.getPos_in() + "-" + f.getPos_fin());
+						"\n" + name + " removed with sucess off the family " + f.getPos_in() + "-" + f.getPos_fin());
 				return true;
 
 			}
 		}
 
 		if (!found) {
-			System.err.println("\nMembro não existe!");
+			System.err.println("\nMember does not exist!");
 		}
 		return false;
 	}
@@ -185,7 +184,7 @@ public class Main {
 	// FUNÇAO QUE APRESENTA AS POSIÇÕES DOS TERRENOS DE UMA FAMÍLIA, BEM COMO OS
 	// SEUS MEMBROS, PROCURANDO PELO NOME DE UMA PESSOA
 	private static void lookup(String name) {
-		System.out.println("\nLookup do membro " + name);
+		System.out.println("\nLookup of the member " + name);
 		boolean found = false;
 		for (Familia f : families) {
 			for (Pessoa p : f.getMembros()) {
@@ -200,7 +199,7 @@ public class Main {
 			}
 		}
 		if (!found) {
-			System.err.println("Membro não existe!");
+			System.err.println("Member does not exist!");
 		}
 	}
 
