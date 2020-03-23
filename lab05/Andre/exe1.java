@@ -1,3 +1,5 @@
+package LAB5;
+
 public class exe1{
     public static void main(String[] args) {
         Commodity[] menu = new Commodity[2];
@@ -8,6 +10,7 @@ public class exe1{
         containers[1] = ContainerFactory.createContainerFor(menu[1]);
         containers[0].placeCommodity(menu[0]); 
         containers[1].placeCommodity(menu[1]);
+        
         System.out.println("Thank you for choosing your meal!"); 
         for(Container c : containers){
             System.out.println(c);
