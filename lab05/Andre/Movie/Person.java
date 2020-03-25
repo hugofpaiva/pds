@@ -1,9 +1,7 @@
-package LAB5.v3;
-
 public class Person {
-
+	// CLASSE DEMONSTRATIVA
 	public Person() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 }

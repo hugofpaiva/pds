@@ -1,5 +1,3 @@
-package LAB5.v3;
-
 import java.util.List;
 
 public class Movie {
@@ -16,8 +14,8 @@ public class Movie {
 	private final boolean isIndependent;
 	
 	public static class Builder{
-		private String title;
-		private int year;
+		private final String title;
+		private final int year;
 		private Person director=null;
 		private Person writer=null;
 		private List<Person> cast=null;
@@ -33,46 +31,54 @@ public class Movie {
 			this.year=year;
 		}
 
-		public void setDirector(Person director) {
+		public Builder setDirector(Person director) {
 			this.director = director;
+			return this;
 		}
 
-		public void setWriter(Person writer) {
+		public Builder setWriter(Person writer) {
 			this.writer = writer;
+			return this;
 		}
 
-		public void setCast(List<Person> cast) {
+		public Builder setCast(List<Person> cast) {
 			this.cast = cast;
+			return this;
 		}
 
-		public void setLocations(List<Place> locations) {
+		public Builder setLocations(List<Place> locations) {
 			this.locations = locations;
+			return this;
 		}
 
-		public void setLanguages(List<String> languages) {
+		public Builder setLanguages(List<String> languages) {
 			this.languages = languages;
+			return this;
 		}
 
-		public void setGenres(List<String> genres) {
+		public Builder setGenres(List<String> genres) {
 			this.genres = genres;
+			return this;
 		}
 
-		public void setTelevision(boolean isTelevision) {
+		public Builder setTelevision(boolean isTelevision) {
 			this.isTelevision = isTelevision;
+			return this;
 		}
 
-		public void setNetflix(boolean isNetflix) {
+		public Builder setNetflix(boolean isNetflix) {
 			this.isNetflix = isNetflix;
+			return this;
 		}
 
-		public void setIndependent(boolean isIndependent) {
+		public Builder setIndependent(boolean isIndependent) {
 			this.isIndependent = isIndependent;
+			return this;
 		}
 		
 		public Movie buildMovie() {
 			return new Movie(this);
 		}
-		
 	}
 	
 	private Movie(Builder b) {
@@ -87,5 +93,20 @@ public class Movie {
 		this.isTelevision=b.isTelevision;
 		this.isNetflix=b.isNetflix;
 		this.isIndependent=b.isIndependent;
+	}
+
+	public java.lang.String toString() {
+		return "Filme: " +
+				"title='" + title + '\'' +
+				", \nyear=" + year +
+				", \ndirector=" + director +
+				", \nwriter=" + writer +
+				", \ncast=" + cast +
+				", \nlocations=" + locations +
+				", \nlanguages=" + languages +
+				", \ngenres=" + genres +
+				", \nisTelevision=" + isTelevision +
+				", \nisNetflix=" + isNetflix +
+				", \nisIndependent=" + isIndependent;
 	}
 }
