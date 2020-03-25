@@ -1,0 +1,14 @@
+Construtores:
+	protected Calendar()
+	protected Calendar(TimeZone zone, Locale aLocale)
+
+Visto que são protegidos, não é possível serem acedidos fora do package
+--
+
+Existem vários métodos 'get' entre as linhas 966 e 1014. Todos estes métodos chamam o método 'createCalendar' e são utilizados para criar um novo objeto da classe Calendar
+
+--
+Factory:
+	private static Calendar createCalendar(TimeZone zone, 1017 Locale aLocale)
+
+O método 'createCalendar' acaba por ser o método que cria os o calendário, consoante os argumentos passados. Funciona como uma Fábrica pois cria os vários tipos de Calendário, implementado o Factory Creational Design Pattern.

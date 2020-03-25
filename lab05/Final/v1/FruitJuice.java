@@ -3,7 +3,7 @@ public class FruitJuice implements Commodity{
     private State estado = State.Liquid;
     private Temperature temperatura = Temperature.COLD;
     private String FruitName = "Orange";
-    //
+    
     public Temperature getTemperature() {
 		return temperatura;
 	}
