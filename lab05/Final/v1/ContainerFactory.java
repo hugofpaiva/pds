@@ -1,4 +1,5 @@
 public class ContainerFactory {
+	// FACTORY DOS CONTAINERS; SERVE COMO INTERMEDIÁRIO PARA DECIDIR QUAL O CONTAINER A SER USADO PARA ARMAZENAR UMA CERTA COMIDA
 	public static Container createContainerFor(Commodity x) {
 		State estado = x.getState();
 		Temperature temperatura = x.getTemperature();

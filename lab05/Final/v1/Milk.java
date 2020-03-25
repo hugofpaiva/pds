@@ -1,6 +1,8 @@
 public class Milk implements Commodity{
+	// CARACTERISTICAS DO ALIMENTO
     private State estado = State.Liquid;
     private Temperature temperatura = Temperature.WARM;
+	//
 
 	public Temperature getTemperature() {
 		return temperatura;

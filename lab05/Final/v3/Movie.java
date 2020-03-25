@@ -12,7 +12,8 @@ public class Movie {
 	private final boolean isTelevision;
 	private final boolean isNetflix;
 	private final boolean isIndependent;
-	
+
+	// O CLASS BUILDER CRIA UM OBJETO COMPLEXO, À SEMELHANCE DO MOVIE, USANDO MÉTODOS MAIS SIMPLES E USANDO UMA ABORDAGEM PASSO A PASSO.
 	public static class Builder{
 		private final String title;
 		private final int year;
@@ -25,12 +26,14 @@ public class Movie {
 		private boolean isTelevision;
 		private boolean isNetflix;
 		private boolean isIndependent;
-		
+
+
 		public Builder(String title, int year) {
 			this.title=title;
 			this.year=year;
 		}
 
+		// OS PRÓXIMOS MÉTODOS SÃO USADOS COMO PASSOS NA CRIAÇÃO DO FILME FINAL
 		public Builder Director(Person director) {
 			this.director = director;
 			return this;
@@ -81,7 +84,8 @@ public class Movie {
 		}
 		
 	}
-	
+
+	// CONSTRUTOR DO MOVIE, QUE RECEBE O BUILDER E ASSOCIA OS PARAMETROS DO MOVIE COM OS PARAMETROS DO BUILDER
 	private Movie(Builder b) {
 		this.title=b.title;
 		this.year=b.year;

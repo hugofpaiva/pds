@@ -1,8 +1,9 @@
 public class FruitJuice implements Commodity{
+	// CARACTERISTICAS DO ALIMENTO
     private State estado = State.Liquid;
     private Temperature temperatura = Temperature.COLD;
     private String FruitName = "Orange";
-    
+    //
     public Temperature getTemperature() {
 		return temperatura;
 	}

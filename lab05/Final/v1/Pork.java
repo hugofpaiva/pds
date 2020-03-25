@@ -1,7 +1,8 @@
 public class Pork implements Commodity{
+	// CARACTERÍSTICAS DO ALIMENTO
     private State estado = State.Solid;
     private Temperature temperatura = Temperature.WARM;
-    
+    //
     
 	public Temperature getTemperature() {
 		return temperatura;

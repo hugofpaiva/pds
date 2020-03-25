@@ -1,6 +1,8 @@
 public class Tuna implements Commodity {
+	// CARACTERÍSTICAS DO ALIMENTO
 	private State estado = State.Liquid;
 	private Temperature temperatura = Temperature.COLD;
+	//
 
 	public Temperature getTemperature() {
 		return temperatura;
