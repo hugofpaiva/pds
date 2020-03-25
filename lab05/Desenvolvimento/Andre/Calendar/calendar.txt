@@ -1,0 +1,6 @@
+Construtores:
+	protected Calendar()
+	protected Calendar(TimeZone zone, Locale aLocale)
+	
+Factory:
+	private static Calendar createCalendar(TimeZone zone, 1017 Locale aLocale)
