@@ -6,11 +6,16 @@ public class ContactsBook implements ContactsInterface {
 	private ArrayList<Contact> book = new ArrayList<>();
 	
 	public ContactsBook(ArrayList<Contact> oldbook) {
+		this.book=new ArrayList<>();
 		for(Contact x : oldbook) {
 			if(!add(x)){
 				System.err.println("O contacto já foi adicionado");
 			}
 		}
+	}
+	
+	public ContactsBook() {
+		this.book=new ArrayList<>();
 	}
 
 	@Override
@@ -24,7 +29,8 @@ public class ContactsBook implements ContactsInterface {
 
 	@Override
 	public void saveAndClose() {
-		
+		ContactsStorageInterface store = new ContactsStorageText("ficheiroTexto.txt");
+		store.saveContacts(book);
 	}
 
 	@Override
@@ -34,14 +40,18 @@ public class ContactsBook implements ContactsInterface {
 
 	@Override
 	public boolean exist(Contact contact) {
-		// TODO Auto-generated method stub
+		for(Contact x : book) {
+			if(x.getNumero() == contact.getNumero()) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public Contact getByName(String name) {
 		for(Contact x : book) {
-			if(x.getNome()==name) {
+			if(x.getNome().equals(name)) {
 				return x;
 			}
 		}
@@ -60,6 +70,7 @@ public class ContactsBook implements ContactsInterface {
 	@Override
 	public boolean remove(Contact contact) {
 		for(Contact x : book) {
+			System.out.println(x.getNome());
 			if(x.getNumero() == contact.getNumero()) {
 				book.remove(x);
 				return true;

@@ -39,11 +39,16 @@ public class ContactsStorageText implements ContactsStorageInterface{
 	@Override
 	public boolean saveContacts(List<Contact> list) {
 		String texto="";
+		int counter = 0;
 		for(Contact x : list) {
-			texto+= x.getNome() + "," + x.getNumero() + "\n";
+			counter++;
+			texto+=x.getNome() + "," + x.getNumero();
+			if(counter<list.size()) {
+				texto+="\n";
+			}
 		}
 		try (PrintWriter out = new PrintWriter(file)) {
-		    out.println(texto);
+		    out.print(texto);
 		}catch(FileNotFoundException e) {
 			System.err.println("Ficheiro não pôde ser guardado");
 		}
