@@ -1,3 +1,5 @@
+package lab06;
+
 // Petiscos
 class Empregado {
     private String nome;

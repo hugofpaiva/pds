@@ -1,3 +1,5 @@
+package lab06;
+
 // Sweets
 class Employee {
     private String name;
