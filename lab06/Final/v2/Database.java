@@ -12,6 +12,7 @@ public class Database implements ContactsInterface {
 		db = store;
 	}
 
+	// NO CASO DE EXISTIR CONTEUDO NA LISTA DE CONTACTOS, GUARDA A LISTA NA STORAGE DEFAULT
 	public void saveAndClose() {
 		if (db == null) {
 			System.err.println("No database!");
@@ -23,10 +24,12 @@ public class Database implements ContactsInterface {
 
 	}
 
+	// NO CASO DE EXISTIR CONTEUDO NA LISTA DE CONTACTOS, GUARDA A LISTA NA STORAGE ESCOLHIDA POR PARÂMETRO
 	public void saveAndClose(ContactsStorageInterface store) {
 		for (Contact x : contactos) {
 			System.out.println(x);
 		}
+
 		store.saveContacts(contactos);
 		contactos.clear();
 

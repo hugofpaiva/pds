@@ -18,14 +18,13 @@ public class StorageTXT implements ContactsStorageInterface {
 	}
 
 	public List<Contact> loadContacts() {
-
 		List<Contact> contactos = new ArrayList<Contact>();
 
 		try {
-
 			Scanner sc = new Scanner(file);
 
 			while (sc.hasNextLine()) {
+				// CONTACTOS SEPARADOS POR TAB
 				String[] line = sc.nextLine().split("\t");
 				for (String x : line) {
 					String[] contact = x.split(",");
@@ -47,6 +46,7 @@ public class StorageTXT implements ContactsStorageInterface {
 		file.delete();
 		try (FileWriter out = new FileWriter(file)) {
 			for (Contact c : list) {
+				// CONTACTOS SEPARADOS POR TAB
 				if (c.hasEmail())
 					out.write(c.getName() + "," + c.getNumber() + "," + c.getEmail() + "\t");
 				else

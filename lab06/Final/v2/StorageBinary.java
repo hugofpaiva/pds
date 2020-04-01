@@ -21,15 +21,12 @@ public class StorageBinary implements ContactsStorageInterface{
 		String line;
 		List<Contact> contactos = new ArrayList<Contact>();
 		
-
 		try {
-
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			
 
 			while ((line = bufferedReader.readLine()) != null) {
-
+				// CONTACTOS SEPARADOS POR TAB
 				String[] line_array = line.split("\t");
 				for (String x : line_array) {
 					String[] contact = x.split(",");
@@ -39,7 +36,6 @@ public class StorageBinary implements ContactsStorageInterface{
 						contactos.add(new Contact(contact[0], Integer.parseInt(contact[1])));
 				}
 			}
-
 		} catch (Exception e) {
 			System.out.println("okkk");
 			System.err.println("There was a problem accessing the database!");
@@ -51,6 +47,7 @@ public class StorageBinary implements ContactsStorageInterface{
 		file.delete();
 		try (PrintWriter out = new PrintWriter(file)) {
 			for (Contact c : list) {
+				// CONTACTOS SEPARADOS POR TAB
 				if (c.hasEmail())
 					out.print(c.getName() + "," + c.getNumber() + "," + c.getEmail() + "\t");
 				else

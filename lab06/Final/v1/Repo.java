@@ -6,19 +6,17 @@ import java.util.List;
 import java.util.Vector;
 
 public class Repo {
-	private ArrayList<Colaborador> colaboradores;
-	private Vector<Employee> employees;
-	private ArrayList<Empregado> empregados;
+	private ArrayList<Colaborador> colaboradores; // NOVA LISTA COM EMPREGADOS
+	private Vector<Employee> employees; // LISTA DOS EMPREGADOS DA SWEET
+	private ArrayList<Empregado> empregados; // LISTA DOS EMPREGADOS DA PETISCOS
 	
+
 	public Repo() {
 		this.colaboradores=new ArrayList<>();
 	}
 	
 	public void addRepo(Employee[] employees) {
-		// TODO ELIMINAR
-		//Vector<Employee> vector = new Vector<Employee>(Arrays.asList(employees));
-		//this.employees=vector;
-		
+		// ADICIONA OS EMPREGADOS DA SWEET QUE AINDA NÃO ESTIVEREM NA BASE DE DADOS
 		this.employees=new Vector<>();
 		for(int i=0; i<employees.length; i++) {
 			if(!check((int)employees[i].getEmpNum())) {
@@ -28,10 +26,7 @@ public class Repo {
 	}
 	
 	public void addRepo(List<Empregado> empregados) {
-		// TODO ELIMINAR
-		//this.empregados=(ArrayList<Empregado>) empregados;
-		
-		
+		// ADICIONA OS EMPREGADOS DA PETISCO QUE AINDA NÃO ESTIVEREM NA BASE DE DADOS
 		this.empregados=new ArrayList<>();
 		for(int i=0; i<empregados.size(); i++) {
 			if(!check((int)empregados.get(i).codigo())) {
@@ -54,6 +49,13 @@ public class Repo {
 	}
 	
 	public boolean remove(int codigo) {
+		/*
+			* PROCURA/REMOVE EM TODAS AS LISTAS
+			* colaboradores - nova lista
+			* empregados - lista dos empregados da Petiscos
+			* employees - lista dos empregados da Sweet
+		*/
+
 		for(int i=0; i<colaboradores.size(); i++) {
 			if(colaboradores.get(i).getCodigo()==codigo) {
 				colaboradores.remove(colaboradores.get(i));
@@ -79,6 +81,13 @@ public class Repo {
 	}
 	
 	public boolean check(int codigo) {
+		/*
+			* PROCURA EM TODAS AS LISTAS
+			* colaboradores - nova lista
+			* empregados - lista dos empregados da Petiscos
+			* employees - lista dos empregados da Sweet
+		*/
+
 		if(this.colaboradores!=null && this.colaboradores.size()>0) {
 			for(int i=0; i<colaboradores.size(); i++) {
 				if(colaboradores.get(i).getCodigo()==codigo) {
@@ -106,7 +115,13 @@ public class Repo {
 	}
 	
 	public void print() {
-		
+		/*
+			* FAZ PRINT DE TODAS AS LISTAS
+			* colaboradores - nova lista
+			* empregados - lista dos empregados da Petiscos
+			* employees - lista dos empregados da Sweet
+		*/
+
 		if(this.colaboradores!=null && this.colaboradores.size()>0) {
 			for(Colaborador x : this.colaboradores) {
 				System.out.println(x.getCodigo() + ": " + x.getNome() + " " + x.getApelido() + "; Ganha " + x.getSalario());

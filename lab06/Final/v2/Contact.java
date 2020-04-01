@@ -5,11 +5,13 @@ public class Contact {
 	private Integer number;
 	private String name;
 	
+	// CONSTRUTOR PARA OS DOIS CAMPOS OBRIGATÓRIOS
 	public Contact(String name, Integer number) {
 		this.name=name;
 		this.number=number;
 	}
 	
+	// CONSTRUTOR PARA TODOS OS 3 CAMPOS
 	public Contact(String name, Integer number, String email) {
 		this.name=name;
 		this.number=number;

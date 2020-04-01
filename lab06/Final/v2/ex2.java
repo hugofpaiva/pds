@@ -3,10 +3,14 @@ package lab06.v2;
 public class ex2 {
 
 	public static void main(String[] args) {
-		// Criar objeto responsável por guardar em txt
+		/*
+			* TEXT
+		*/
+
+		// CRIAR OBJETO RESPONSÁVEL POR GUARDAR EM TXT
 		ContactsStorageInterface file_txt = new StorageTXT("database.txt");
 
-		// Criar objeto responsável por aceder à base de dados em txt
+		// CRIAR OBJETO RESPONSÁVEL POR ACEDER À BASE DE DADOS EM TXT
 		ContactsInterface db_txt = new Database();
 
 		db_txt.openAndLoad(file_txt);
@@ -32,12 +36,14 @@ public class ex2 {
 
 		db_txt.saveAndClose();
 
-		// Binary
+		/*
+			* BINARY
+		*/
 
-		// Criar objeto responsável por guardar em txt
+		// CRIAR OBJETO RESPONSÁVEL POR GUARDAR EM TXT
 		ContactsStorageInterface file_binary = new StorageBinary("databasebin");
 
-		// Criar objeto responsável por aceder à base de dados em txt
+		// CRIAR OBJETO RESPONSÁVEL POR ACEDER À BASE DE DADOS EM TXT
 		ContactsInterface db_binary = new Database();
 
 		db_binary.openAndLoad(file_binary);
@@ -52,7 +58,7 @@ public class ex2 {
 
 		db_binary.openAndLoad(file_binary);
 
-		hugo = db_binary.getByName("Hugo"); // 
+		hugo = db_binary.getByName("Hugo");
 
 		System.out.println(hugo);
 

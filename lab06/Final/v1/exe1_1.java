@@ -26,15 +26,15 @@ public class exe1_1 {
 		reg.remove(emp3.codigo());
 		
 		if(reg.isEmpregado(2)) {
-			System.out.println("O empregado existe");
+			System.out.println("O empregado 2 existe");
 		}else {
-			System.out.println("O empregado não existe");
+			System.out.println("O empregado 2 não existe");
 		}
 		
 		if(reg.isEmpregado(4)) {
-			System.out.println("O empregado existe");
+			System.out.println("O empregado 4 existe");
 		}else {
-			System.out.println("O empregado não existe");
+			System.out.println("O empregado 4 não existe");
 		}
 	}
 }
