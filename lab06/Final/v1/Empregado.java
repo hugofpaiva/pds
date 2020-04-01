@@ -1,5 +1,3 @@
-package LAB6;
-
 class Empregado {
 	private String nome;
 	private String apelido;

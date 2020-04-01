@@ -1,5 +1,3 @@
-package LAB6;
-
 public class Colaborador {
 	private String nome;
 	private String apelido = null;

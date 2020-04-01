@@ -1,5 +1,3 @@
-package lab06.v2;
-
 import java.util.ArrayList;
 import java.util.List;
 

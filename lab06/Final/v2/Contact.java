@@ -1,5 +1,3 @@
-package lab06.v2;
-
 public class Contact {
 	private String email = null;
 	private Integer number;

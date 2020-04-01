@@ -1,5 +1,3 @@
-package lab06.v2;
-
 public interface ContactsInterface {
 	public void openAndLoad(ContactsStorageInterface store); 
 	public void saveAndClose();

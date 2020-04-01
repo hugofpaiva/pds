@@ -1,5 +1,3 @@
-package LAB6;
-
 public class Employee {
 	private String name;
 	private long emp_num;

@@ -1,5 +1,3 @@
-package LAB6;
-
 public class exe1_2 {
 	public static void main(String[] args) {
 		

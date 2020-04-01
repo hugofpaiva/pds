@@ -1,5 +1,3 @@
-package LAB6;
-
 public class exe1_1 {
 
 	public exe1_1() {
