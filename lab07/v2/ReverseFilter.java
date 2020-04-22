@@ -1,11 +1,14 @@
-package LAB7.v2;
-
 public class ReverseFilter  extends FileDecorator{
 
 	public ReverseFilter(FileInterface file) {
 		super(file);
 	}
 
+	/*
+		*
+		* FUNÇÃO QUE RETORNA O TEXTO ESCRITO DE TRÁS PARA A FRENTE
+		*
+	 */
 	public String next() {
 		// Texto invertido
 		String w = super.next();

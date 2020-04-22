@@ -1,11 +1,16 @@
-package LAB7.v2;
-
 public class CoderFilter extends FileDecorator{
 
 	public CoderFilter(FileInterface file) {
 		super(file);
 	}
-	
+
+	/*
+		*
+		* CONVERTE O TEXTO NUMA CIFRA EM QUE A PRIMEIRA LETRA DO TEXTO É A LETRA IMEDIATAMENTE A SEGUIR NO CÓDIGO ASCII
+		* E AS RESTANTES PODEM ADOTAR A SUA POSIÇÃO NÚMERICA, SE FOREM VOGAIS, OU PERMANECER INALTERADAS, SE FOREM CONSOANTES
+		*
+	 */
+
 	public String next() {
 		// Texto Cifrado
 		String w = super.next();

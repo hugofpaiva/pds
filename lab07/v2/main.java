@@ -1,5 +1,3 @@
-package LAB7.v2;
-
 public class main {
 
 	public static void main(String[] args) {
