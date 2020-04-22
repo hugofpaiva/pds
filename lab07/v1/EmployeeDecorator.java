@@ -1,5 +1,3 @@
-package LAB7.v1;
-
 import java.util.Date;
 
 public abstract class EmployeeDecorator implements EmployeeInterface{

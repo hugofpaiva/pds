@@ -1,5 +1,3 @@
-package LAB7.v1;
-
 import java.util.Date;
 
 public class Employee implements EmployeeInterface{
@@ -22,7 +20,6 @@ public class Employee implements EmployeeInterface{
 
 	@Override
 	public void work() {
-		// TODO Auto-generated method stub
 		System.out.println("O " + name + " está trabalhando!");
 	}
 
