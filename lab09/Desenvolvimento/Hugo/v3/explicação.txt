@@ -1,0 +1,3 @@
+Existem smartphones com múltiplos donos e versões do seu sistema operativo, neste caso Android.
+Usando Chain of Responsability, foram criadas várias classes quer permitem fazer update do smartphone numa determinada versão.
+Todas as classes herdam da classe Updater.
