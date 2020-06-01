@@ -1,0 +1,48 @@
+{
+	"configuration": {
+		"board": {
+			"rows": "8",
+			"collumns": "10"
+		},
+		"ships": {
+			"ship": [
+				{
+					"name": "Aircraft carrier",
+					"number": "1",
+					"size": "5"
+				},
+				{
+					"name": "Battleship",
+					"number": "1",
+					"size": "4"
+				},
+				{
+					"name": "Submarine",
+					"number": "1",
+					"size": "3"
+				},
+				{
+					"name": "Destroyer",
+					"number": "1",
+					"size": "2"
+				},
+				{
+					"name": "Patrol boat",
+					"number": "2",
+					"size": "1"
+				}
+			],
+			"complex-ship": {
+				"name": "SuperShip",
+				"number": "1",
+				"matrix": {
+					"row": [
+						"0100",
+						"1111",
+						"0100"
+					]
+				}
+			}
+		}
+	}
+}
