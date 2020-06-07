@@ -39,8 +39,8 @@ public class BattlePanel extends JPanel {
 	/*public void fillBoard(JSONArray ships, Board b){
 		for (JSONObject ship : ships) {
 			int orientation = (int) (4 * Math.random());
-			int initx = (int) (collumns + 1 * Math.random());
-			int inity = (int) (rows + 1 * Math.random());
+			int initx = (int) (collumns * Math.random());
+			int inity = (int) (rows * Math.random());
 
 			switch (orientation) {
 				case 0:

@@ -7,7 +7,12 @@ public class Ship{
         this.name=name;
         this.size=size;
     }
+
     public int Id(){
         return id;
+    }
+
+    public int Size(){
+        return size;
     }
 }
