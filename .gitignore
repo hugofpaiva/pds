@@ -2,4 +2,4 @@
 .DS_Store
 
 # Ignore compiled files JAVA
-.class
+*.class

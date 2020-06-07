@@ -16,6 +16,7 @@ public class BattlePanel extends JPanel {
 		JSONObject board = (JSONObject) config.get("board");
 		int rows = Integer.parseInt((String) board.get("rows"));
 		int collumns = Integer.parseInt((String) board.get("collumns"));
+		Board tabuleiro = new Board(collumns, rows);
 
 		if (collumns > 0 && collumns <= 25) {
 			sizex = collumns;
@@ -31,32 +32,14 @@ public class BattlePanel extends JPanel {
 
 		JSONArray ships = (JSONArray) ((JSONObject) board.get("ships")).get("ship");
 
-		fillBoard();
+		for (int i=0; i < ships.length(); i++) {
+			Ship s=new Ship(i, ships.getJSONObject(i).name, ships.getJSONObject(i).size);
+			tabuleiro.addShip(s);
+		}
+
 		repaint(); // invoke paintComponent to output the Battle
 
 	}
-
-	/*public void fillBoard(JSONArray ships, Board b){
-		for (JSONObject ship : ships) {
-			int orientation = (int) (4 * Math.random());
-			int initx = (int) (collumns * Math.random());
-			int inity = (int) (rows * Math.random());
-
-			switch (orientation) {
-				case 0:
-					break;
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				default:
-					System.err.println("ERRO");
-			}
-
-		}
-	}*/
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -68,6 +51,8 @@ public class BattlePanel extends JPanel {
 					g.setColor(Color.black);
 				} else if (battle[i][j] == 2)
 					g.setColor(Color.red);
+				else
+					g.setColor(Color.blue);
 				g.fillRect(i * 20, j * 20, 20, 20);
 			}
 	}
