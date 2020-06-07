@@ -36,6 +36,8 @@ public class Board{
             // INCREMENTADORES TANTO PARA O X COMO PARA O Y
             int incx=1;
             int incy=1;
+
+            // TODO: AINDA NÃO VERIFICA SE JÁ EXISTE ALGUM BARCO NUMA POSIÇÃO
             while(!choosen){
                 orientation = (int) (8 * Math.random());
                 initx = (int) (width * Math.random());
@@ -94,7 +96,7 @@ public class Board{
 			    }
             }
 
-            //
+            // ESTE CICLO JÁ TRATA DE TODAS AS ADIÇÕES
             for(int x=0; x<Math.abs(incx*ship.Size()); x++){
                 for(int y=0; y<Math.abs(incy*ship.Size()); y++){
                     fillPos(initx+(x*incx),inity+(y*incy),ship);
@@ -102,5 +104,17 @@ public class Board{
             }
 
 		}
+    }
+
+    // VERIFICA SE EXISTE ALGUM BARCO NAS POISÇÕES ONDE É SUPOSTO ADICIONAR O BARCO
+    public boolean checkBoatOccupation(int initx, int inity, int incx, int incy, Ship ship){
+        int counter=0;
+        for(int x=0; x<Math.abs(incx*ship.Size()); x++){
+            for(int y=0; y<Math.abs(incy*ship.Size()); y++){
+                if(tabuleiro[initx+(x*incx)][inity+(y*incy)]!=0)
+                    counter++;
+            }
+        }
+        return (counter==0) ? true : false;
     }
 }
