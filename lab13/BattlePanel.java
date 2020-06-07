@@ -1,9 +1,6 @@
-package lab13;
-
 import java.awt.*;
 
 import javax.swing.*;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -34,6 +31,12 @@ public class BattlePanel extends JPanel {
 
 		JSONArray ships = (JSONArray) ((JSONObject) board.get("ships")).get("ship");
 
+		fillBoard();
+		repaint(); // invoke paintComponent to output the Battle
+
+	}
+
+	/*public void fillBoard(JSONArray ships, Board b){
 		for (JSONObject ship : ships) {
 			int orientation = (int) (4 * Math.random());
 			int initx = (int) (collumns + 1 * Math.random());
@@ -53,11 +56,7 @@ public class BattlePanel extends JPanel {
 			}
 
 		}
-		// x = 0;
-		// y = 5;
-		repaint(); // invoke paintComponent to output the Battle
-
-	}
+	}*/
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
