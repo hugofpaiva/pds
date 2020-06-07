@@ -1,4 +1,4 @@
-package lab13;
+package LAB13;
 
 import javax.swing.JFrame;
 import org.json.simple.JSONArray;
@@ -28,7 +28,7 @@ public class Main {
 
 
         JFrame frame = new JFrame();
-		frame.setSize(500, 500);
+		frame.setSize(550, 550);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		BattlePanel mp = new BattlePanel(config);
 		frame.add(mp);

@@ -1,8 +1,8 @@
 {
 	"configuration": {
 		"board": {
-			"rows": "8",
-			"collumns": "10"
+			"rows": "25",
+			"collumns": "25"
 		},
 		"ships": {
 			"ship": [

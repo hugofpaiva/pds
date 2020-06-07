@@ -1,3 +1,5 @@
+package LAB13;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -30,13 +32,16 @@ public class BattlePanel extends JPanel {
 			sizey = 25;
 		}
 
-		JSONArray ships = (JSONArray) ((JSONObject) board.get("ships")).get("ship");
+		JSONArray ships = (JSONArray) ((JSONObject) config.get("ships")).get("ship");
 
-		for (int i=0; i < ships.length(); i++) {
-			Ship s=new Ship(i, ships.getJSONObject(i).name, ships.getJSONObject(i).size);
+		for (int i=1; i <= ships.size(); i++) {
+			JSONObject temp = (JSONObject) ships.get(i-1);
+			Ship s=new Ship(i,  temp.get("name").toString(), Integer.valueOf(temp.get("size").toString()));
 			tabuleiro.addShip(s);
 		}
-
+		
+		tabuleiro.fillBoard();
+		battle=tabuleiro.tabuleirinho();
 		repaint(); // invoke paintComponent to output the Battle
 
 	}
@@ -47,12 +52,16 @@ public class BattlePanel extends JPanel {
 			for (int i = 0; i < sizey; i++) {
 				if (battle[i][j] == 0)
 					g.setColor(Color.white);
-				else if (battle[i][j] == 1) {
+				else if (battle[i][j] == 1) 
 					g.setColor(Color.black);
-				} else if (battle[i][j] == 2)
+				else if (battle[i][j] == 2)
 					g.setColor(Color.red);
-				else
+				else if (battle[i][j] == 3)
+					g.setColor(Color.green);
+				else if (battle[i][j] == 4)
 					g.setColor(Color.blue);
+				else if (battle[i][j] == 5)
+					g.setColor(Color.yellow);
 				g.fillRect(i * 20, j * 20, 20, 20);
 			}
 	}

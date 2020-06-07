@@ -1,3 +1,6 @@
+package LAB13;
+
+
 import java.util.ArrayList;
 public class Board{
     int width;
@@ -39,68 +42,76 @@ public class Board{
 
             // TODO: AINDA NÃO VERIFICA SE JÁ EXISTE ALGUM BARCO NUMA POSIÇÃO
             while(!choosen){
+            	System.out.println("---Escolha---");
                 orientation = (int) (8 * Math.random());
                 initx = (int) (width * Math.random());
                 inity = (int) (height * Math.random());
                 switch (orientation) {
                     case 0: // ESQUERDA
-                        if(initx - ship.Size() >=0)
+                    	
+                        if(initx - ship.Size() >= 0)
                             choosen=true;
                         incx=-1;
                         incy=0;
+                        
                         break;
                     case 1: // CIMA
-                        if(inity - ship.Size() >=0)
+                    	
+                        if(inity - ship.Size() >= 0)
                             choosen=true;
                         incx=0;
                         incy=-1;
                         break;
                     case 2: // DIREITA
-                        if(initx + ship.Size() <= width)
+                        if(initx + ship.Size() < width)
                             choosen=true;
                         incx=1;
                         incy=0;
                         break;
                     case 3: // BAIXO
-                        if(inity + ship.Size() <= height)
+                        if(inity + ship.Size() < height)
                             choosen=true;
                         incx=0;
                         incy=1;
                         break;
                     case 4: // ESQUERDA CIMA
-                        if(initx - ship.Size() >=0 && inity-ship.Size()>=0)
+                        if((initx - ship.Size() >= 0 && inity-ship.Size()>=0))
                             choosen=true;
                         incx=-1;
                         incy=-1;
                         break;
                     case 5: // DIREITA CIMA
-                        if(initx + ship.Size() <=width && inity-ship.Size()>=0)
+                        if(initx + ship.Size() <width-1 && inity-ship.Size()>=0)
                             choosen=true;
                         incx=1;
                         incy=-1;
                         break;
                     case 6: // DIREITA BAIXO
-                        if(initx + ship.Size() <= width && inity+ship.Size()<=height)
+                        if(initx + ship.Size() <width-1 && inity+ship.Size()<height-1)
                             choosen=true;
                         incx=1;
                         incy=1;
                         break;
                     case 7: // ESQUEDA BAIXO
-                        if(initx - ship.Size() >=0 && inity+ship.Size()<=height)
+                        if(initx - ship.Size() >= 0 && inity+ship.Size()<height-1)
                             choosen=true;
                         incx=-1;
                         incy=1;
                         break;
                     default:
                         System.err.println("ERRO");
-			    }
+                }
+                
+                if(choosen==true)
+                    if(checkBoatOccupation(initx, inity,incx, incy, ship))
+                        choosen=false;
             }
+            
+            
 
             // ESTE CICLO JÁ TRATA DE TODAS AS ADIÇÕES
-            for(int x=0; x<Math.abs(incx*ship.Size()); x++){
-                for(int y=0; y<Math.abs(incy*ship.Size()); y++){
-                    fillPos(initx+(x*incx),inity+(y*incy),ship);
-                }
+            for(int x=0; x<ship.Size(); x++){
+                fillPos(initx+(x*incx), inity+(x*incy),ship);
             }
 
 		}
@@ -109,12 +120,15 @@ public class Board{
     // VERIFICA SE EXISTE ALGUM BARCO NAS POISÇÕES ONDE É SUPOSTO ADICIONAR O BARCO
     public boolean checkBoatOccupation(int initx, int inity, int incx, int incy, Ship ship){
         int counter=0;
-        for(int x=0; x<Math.abs(incx*ship.Size()); x++){
-            for(int y=0; y<Math.abs(incy*ship.Size()); y++){
-                if(tabuleiro[initx+(x*incx)][inity+(y*incy)]!=0)
-                    counter++;
-            }
+        for(int x=0; x<ship.Size(); x++){
+        	
+        	if(tabuleiro[initx+(x*incx)][inity+(x*incy)]!=0)
+                counter++;
         }
-        return (counter==0) ? true : false;
+        return (counter>0) ? true : false;
+    }
+    
+    public int[][] tabuleirinho(){
+    	return tabuleiro;
     }
 }

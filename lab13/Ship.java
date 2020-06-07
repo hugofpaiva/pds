@@ -1,3 +1,5 @@
+package LAB13;
+
 public class Ship{
     int id;
     String name;
